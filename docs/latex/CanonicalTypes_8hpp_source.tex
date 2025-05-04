@@ -1,0 +1,71 @@
+\doxysection{Canonical\+Types.\+hpp}
+\hypertarget{CanonicalTypes_8hpp_source}{}\label{CanonicalTypes_8hpp_source}\index{include/CanonicalTypes.hpp@{include/CanonicalTypes.hpp}}
+\mbox{\hyperlink{CanonicalTypes_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ CANONICALTYPES\_HEADER}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ CANONICALTYPES\_HEADER}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00017\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcanonical__t}{canonical\_t}}}
+\DoxyCodeLine{00018\ \{}
+\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structcanonical__t_a38199d9a3064e25734ff6eb4617ab2b1}{type}}\ =\ T;}
+\DoxyCodeLine{00023\ \};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00029\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcanonical__t}{canonical\_t}}<int>}
+\DoxyCodeLine{00030\ \{}
+\DoxyCodeLine{00034\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structcanonical__t_3_01int_01_4_a966ed1c7e061fa84a3fad2cfa3a19c61}{type}}\ =}
+\DoxyCodeLine{00035\ \ \ \ \ std::conditional\_t<\textcolor{keyword}{sizeof}(int)\ ==\ 2,}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ int16\_t,}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::conditional\_t<\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int})\ ==\ 4,\ int32\_t,\ int64\_t>>;}
+\DoxyCodeLine{00038\ \};}
+\DoxyCodeLine{00042\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00043\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcanonical__t}{canonical\_t}}<long>}
+\DoxyCodeLine{00044\ \{}
+\DoxyCodeLine{00048\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structcanonical__t_3_01long_01_4_afb3f25dcf0fbe98b3fa80e1a14a01d64}{type}}\ =\ std::conditional\_t<\textcolor{keyword}{sizeof}(long)\ ==\ 4,\ int32\_t,\ int64\_t>;}
+\DoxyCodeLine{00049\ \};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00058\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcanonical__t}{canonical\_t}}<long\ long>}
+\DoxyCodeLine{00059\ \{}
+\DoxyCodeLine{00063\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structcanonical__t_3_01long_01long_01_4_a4701cf84f75a547d9643cde58a7d822a}{type}}\ =\ std::conditional\_t<}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{long}\ long)\ ==\ 4,}
+\DoxyCodeLine{00065\ \ \ \ \ int32\_t,}
+\DoxyCodeLine{00066\ \ \ \ \ std::conditional\_t<\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int})\ ==\ 8,\ int64\_t,\ std::false\_type>>;}
+\DoxyCodeLine{00067\ \};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00072\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00073\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcanonical__t}{canonical\_t}}<unsigned\ int>}
+\DoxyCodeLine{00074\ \{}
+\DoxyCodeLine{00078\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structcanonical__t_3_01unsigned_01int_01_4_a238fc07fd9364c6a51c6514ced1628f9}{type}}\ =\ std::conditional\_t<}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ int)\ ==\ 2,}
+\DoxyCodeLine{00080\ \ \ \ \ uint16\_t,}
+\DoxyCodeLine{00081\ \ \ \ \ std::conditional\_t<\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int})\ ==\ 4,\ uint32\_t,\ uint64\_t>>;}
+\DoxyCodeLine{00082\ \};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00087\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00088\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcanonical__t}{canonical\_t}}<unsigned\ long>}
+\DoxyCodeLine{00089\ \{}
+\DoxyCodeLine{00093\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structcanonical__t_3_01unsigned_01long_01_4_a9a211a2035d94cd311d9c56e67cc3ec3}{type}}\ =}
+\DoxyCodeLine{00094\ \ \ \ \ std::conditional\_t<\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ long)\ ==\ 4,\ uint32\_t,\ uint64\_t>;}
+\DoxyCodeLine{00095\ \};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00100\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00101\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcanonical__t}{canonical\_t}}<unsigned\ long\ long>}
+\DoxyCodeLine{00102\ \{}
+\DoxyCodeLine{00106\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structcanonical__t_3_01unsigned_01long_01long_01_4_a411f8a573b032ae89f4ffeb244bc5fd4}{type}}\ =}
+\DoxyCodeLine{00107\ \ \ \ \ std::conditional\_t<\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ long)\ ==\ 4,}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t,}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::conditional\_t<\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})\ ==\ 8,}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t,}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::false\_type>>;}
+\DoxyCodeLine{00112\ \};}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

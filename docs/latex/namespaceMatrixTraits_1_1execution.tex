@@ -1,0 +1,141 @@
+\doxysection{Matrix\+Traits\+::execution Namespace Reference}
+\hypertarget{namespaceMatrixTraits_1_1execution}{}\label{namespaceMatrixTraits_1_1execution}\index{MatrixTraits::execution@{MatrixTraits::execution}}
+
+
+Namespace for execution modes of matrix algorithms.  
+
+
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Mode}} \{ {\bfseries Auto}
+, \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5aa7e82daa7280af25afbaa076ac16eb1e}{Sequential}}
+, \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5a98402eecfbcefc336954458a01752131}{Parallel}}
+ \}
+\begin{DoxyCompactList}\small\item\em Contains possible execution policies. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Mode}} M$>$ }\\bool \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_a4affae15a4b97dee11b0d7d180cfdf75}{parallelize}} (size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Decides whether to execute a loop in parallel. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Mode}} M, typename F$>$ \newline
+requires (std\+::is\+\_\+invocable\+\_\+v$<$F, std\+::execution\+::sequenced\+\_\+policy$>$)}\\decltype(auto) \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_a32d4caf4f041c3910191b711a5dca0bd}{maybe\+\_\+par}} (F \&\&functor, size\+\_\+t n\+\_\+iters)
+\begin{DoxyCompactList}\small\item\em Call a function with dynamic std\+::execution. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Mode}} M, typename F$>$ \newline
+requires (std\+::is\+\_\+invocable\+\_\+v$<$F, std\+::execution\+::unsequenced\+\_\+policy$>$)}\\decltype(auto) \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_affeca8f1ee2c8463c4cce6c26fbb7fbf}{maybe\+\_\+par\+\_\+unseq}} (F functor, size\+\_\+t n\+\_\+iters)
+\begin{DoxyCompactList}\small\item\em Call a function with dynamic std\+::execution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Namespace for execution modes of matrix algorithms. 
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}\index{MatrixTraits::execution@{MatrixTraits::execution}!Mode@{Mode}}
+\index{Mode@{Mode}!MatrixTraits::execution@{MatrixTraits::execution}}
+\doxysubsubsection{\texorpdfstring{Mode}{Mode}}
+{\footnotesize\ttfamily \label{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5} 
+enum class \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Matrix\+Traits\+::execution\+::\+Mode}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Contains possible execution policies. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Sequential@{Sequential}!MatrixTraits::execution@{MatrixTraits::execution}}\index{MatrixTraits::execution@{MatrixTraits::execution}!Sequential@{Sequential}}}\Hypertarget{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5aa7e82daa7280af25afbaa076ac16eb1e}\label{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5aa7e82daa7280af25afbaa076ac16eb1e} 
+Sequential&Executes the algorithm using a single thread. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Parallel@{Parallel}!MatrixTraits::execution@{MatrixTraits::execution}}\index{MatrixTraits::execution@{MatrixTraits::execution}!Parallel@{Parallel}}}\Hypertarget{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5a98402eecfbcefc336954458a01752131}\label{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5a98402eecfbcefc336954458a01752131} 
+Parallel&Executes the algorithm possibly using multiple threads. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceMatrixTraits_1_1execution_a32d4caf4f041c3910191b711a5dca0bd}\index{MatrixTraits::execution@{MatrixTraits::execution}!maybe\_par@{maybe\_par}}
+\index{maybe\_par@{maybe\_par}!MatrixTraits::execution@{MatrixTraits::execution}}
+\doxysubsubsection{\texorpdfstring{maybe\_par()}{maybe\_par()}}
+{\footnotesize\ttfamily \label{namespaceMatrixTraits_1_1execution_a32d4caf4f041c3910191b711a5dca0bd} 
+template$<$\mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Mode}} M, typename F$>$ \newline
+requires (std\+::is\+\_\+invocable\+\_\+v$<$F, std\+::execution\+::sequenced\+\_\+policy$>$)\\
+decltype(auto) Matrix\+Traits\+::execution\+::maybe\+\_\+par (\begin{DoxyParamCaption}\item[{F \&\&}]{functor}{, }\item[{size\+\_\+t}]{n\+\_\+iters}{}\end{DoxyParamCaption})}
+
+
+
+Call a function with dynamic std\+::execution. 
+
+Uses \doxylink{namespaceMatrixTraits_1_1execution_a4affae15a4b97dee11b0d7d180cfdf75}{parallelize()} to decide whether to call the function with sequential or parallel execution.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em M} & The execution mode (Auto, Sequential or Parallel) \\
+\hline
+{\em F} & The type of the input functor \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em functor} & The function to call with an execution policy \\
+\hline
+{\em n\+\_\+iters} & The number of iterations executed by functor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+functor(dynamic\+\_\+policy) 
+\end{DoxyReturn}
+\Hypertarget{namespaceMatrixTraits_1_1execution_affeca8f1ee2c8463c4cce6c26fbb7fbf}\index{MatrixTraits::execution@{MatrixTraits::execution}!maybe\_par\_unseq@{maybe\_par\_unseq}}
+\index{maybe\_par\_unseq@{maybe\_par\_unseq}!MatrixTraits::execution@{MatrixTraits::execution}}
+\doxysubsubsection{\texorpdfstring{maybe\_par\_unseq()}{maybe\_par\_unseq()}}
+{\footnotesize\ttfamily \label{namespaceMatrixTraits_1_1execution_affeca8f1ee2c8463c4cce6c26fbb7fbf} 
+template$<$\mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Mode}} M, typename F$>$ \newline
+requires (std\+::is\+\_\+invocable\+\_\+v$<$F, std\+::execution\+::unsequenced\+\_\+policy$>$)\\
+decltype(auto) Matrix\+Traits\+::execution\+::maybe\+\_\+par\+\_\+unseq (\begin{DoxyParamCaption}\item[{F}]{functor}{, }\item[{size\+\_\+t}]{n\+\_\+iters}{}\end{DoxyParamCaption})}
+
+
+
+Call a function with dynamic std\+::execution. 
+
+Uses \doxylink{namespaceMatrixTraits_1_1execution_a4affae15a4b97dee11b0d7d180cfdf75}{parallelize()} to decide whether to call the function with unsequenced or parallel unsequenced execution.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em M} & The execution mode (Auto, Sequential or Parallel) \\
+\hline
+{\em F} & The type of the input functor \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em functor} & The function to call with an execution policy \\
+\hline
+{\em n\+\_\+iters} & The number of iterations executed by functor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+functor(dynamic\+\_\+policy) 
+\end{DoxyReturn}
+\Hypertarget{namespaceMatrixTraits_1_1execution_a4affae15a4b97dee11b0d7d180cfdf75}\index{MatrixTraits::execution@{MatrixTraits::execution}!parallelize@{parallelize}}
+\index{parallelize@{parallelize}!MatrixTraits::execution@{MatrixTraits::execution}}
+\doxysubsubsection{\texorpdfstring{parallelize()}{parallelize()}}
+{\footnotesize\ttfamily \label{namespaceMatrixTraits_1_1execution_a4affae15a4b97dee11b0d7d180cfdf75} 
+template$<$\mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Mode}} M$>$ \\
+bool Matrix\+Traits\+::execution\+::parallelize (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n}{}\end{DoxyParamCaption})}
+
+
+
+Decides whether to execute a loop in parallel. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em M} & The execution mode (Auto, Sequential or Parallel) \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em n} & The number of iterations \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A boolean indicating if the execution should be parallelised 
+\end{DoxyReturn}

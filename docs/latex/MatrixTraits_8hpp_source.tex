@@ -1,0 +1,129 @@
+\doxysection{Matrix\+Traits.\+hpp}
+\hypertarget{MatrixTraits_8hpp_source}{}\label{MatrixTraits_8hpp_source}\index{include/MatrixTraits.hpp@{include/MatrixTraits.hpp}}
+\mbox{\hyperlink{MatrixTraits_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ MATRIXTRAITS\_HEADER}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ MATRIXTRAITS\_HEADER}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <complex>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <execution>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <thread>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceMatrixTraits}{MatrixTraits}}\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00024\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}}
+\DoxyCodeLine{00025\ \mbox{\hyperlink{namespaceMatrixTraits_a4723886514f5d3416da9a0af7c45c362}{is\_complex\_arithmetic\_v}}(T)}
+\DoxyCodeLine{00026\ \{}
+\DoxyCodeLine{00027\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00028\ \}}
+\DoxyCodeLine{00032\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ IT>}
+\DoxyCodeLine{00033\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}}
+\DoxyCodeLine{00034\ \mbox{\hyperlink{namespaceMatrixTraits_a4723886514f5d3416da9a0af7c45c362}{is\_complex\_arithmetic\_v}}(std::complex<IT>)}
+\DoxyCodeLine{00035\ \{}
+\DoxyCodeLine{00036\ \ \ \textcolor{keywordflow}{return}\ std::is\_arithmetic\_v<IT>;}
+\DoxyCodeLine{00037\ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00043\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Numeric}}\ =}
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{requires}(T\ a)\ \{\ std::is\_arithmetic\_v<T>\ ||\ \mbox{\hyperlink{namespaceMatrixTraits_a4723886514f5d3416da9a0af7c45c362}{is\_complex\_arithmetic\_v}}(a);\ \};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{StorageOrder}}}
+\DoxyCodeLine{00050\ \{}
+\DoxyCodeLine{00054\ \ \ \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32aa46531966d2fd2a0d92304d9212e44f4}{ROWMAJOR}},}
+\DoxyCodeLine{00058\ \ \ \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32af04a3c791aa353b2385ff97d431330fc}{COLMAJOR}}}
+\DoxyCodeLine{00059\ \};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00064\ \textcolor{keyword}{template}<StorageOrder\ O>}
+\DoxyCodeLine{00065\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptMatrixTraits_1_1IsRowMajor}{IsRowMajor}}\ =\ (O\ ==\ \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32aa46531966d2fd2a0d92304d9212e44f4}{StorageOrder::ROWMAJOR}});}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00070\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75}{Norm}}}
+\DoxyCodeLine{00071\ \{}
+\DoxyCodeLine{00075\ \ \ \mbox{\hyperlink{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75a06c2cea18679d64399783748fa367bdd}{One}},}
+\DoxyCodeLine{00076\ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00077\ \textcolor{comment}{\ \ \ *\ @brief\ The\ Frobenius\ matrix-\/norm}}
+\DoxyCodeLine{00078\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00079\ \ \ Frobenius,}
+\DoxyCodeLine{00080\ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00081\ \textcolor{comment}{\ \ \ *\ @brief\ The\ \(\backslash\)f\$L\string^\{\(\backslash\)infty\}\(\backslash\)f\$\ matrix-\/norm}}
+\DoxyCodeLine{00082\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00083\ \ \ Infinity}
+\DoxyCodeLine{00084\ \};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00089\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceMatrixTraits_1_1execution}{execution}}\ \{}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00094\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Mode}}}
+\DoxyCodeLine{00095\ \{}
+\DoxyCodeLine{00096\ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00097\ \textcolor{comment}{\ \ \ *\ @brief\ Automatically\ chooses\ the\ execution\ mode\ based\ on\ a\ simple\ heuristic}}
+\DoxyCodeLine{00098\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00099\ \ \ Auto,}
+\DoxyCodeLine{00103\ \ \ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5aa7e82daa7280af25afbaa076ac16eb1e}{Sequential}},}
+\DoxyCodeLine{00107\ \ \ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5a98402eecfbcefc336954458a01752131}{Parallel}}}
+\DoxyCodeLine{00108\ \};}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00117\ \textcolor{keyword}{template}<Mode\ M>}
+\DoxyCodeLine{00118\ \textcolor{keywordtype}{bool}}
+\DoxyCodeLine{00119\ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_a4affae15a4b97dee11b0d7d180cfdf75}{parallelize}}(\textcolor{keywordtype}{size\_t}\ n)}
+\DoxyCodeLine{00120\ \{}
+\DoxyCodeLine{00121\ \ \ \textcolor{keywordtype}{size\_t}\ threads\_avail\ =\ std::thread::hardware\_concurrency();}
+\DoxyCodeLine{00122\ \ \ \textcolor{keywordflow}{return}\ (M\ ==\ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5a98402eecfbcefc336954458a01752131}{Mode::Parallel}})\ ||}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ ((M\ ==\ Mode::Auto)\ \&\&\ n\ >=\ 10000\ \&\&\ threads\_avail\ >\ 1);}
+\DoxyCodeLine{00124\ \}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00138\ \textcolor{keyword}{template}<Mode\ M,\ \textcolor{keyword}{typename}\ F>}
+\DoxyCodeLine{00139\ \textcolor{keyword}{decltype}(\textcolor{keyword}{auto})}
+\DoxyCodeLine{00140\ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_a32d4caf4f041c3910191b711a5dca0bd}{maybe\_par}}(F\&\&\ functor,\ \textcolor{keywordtype}{size\_t}\ n\_iters)}
+\DoxyCodeLine{00141\ \ \ \textcolor{keyword}{requires}(std::is\_invocable\_v<F,\ std::execution::sequenced\_policy>)}
+\DoxyCodeLine{00142\ \{}
+\DoxyCodeLine{00143\ \ \ \textcolor{keywordtype}{bool}\ par\ =\ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_a4affae15a4b97dee11b0d7d180cfdf75}{parallelize<M>}}(n\_iters);}
+\DoxyCodeLine{00144\ \ \ \textcolor{keywordflow}{return}\ par\ ?\ functor(std::execution::par)\ :\ functor(std::execution::seq);}
+\DoxyCodeLine{00145\ \}}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00159\ \textcolor{keyword}{template}<Mode\ M,\ \textcolor{keyword}{typename}\ F>}
+\DoxyCodeLine{00160\ \textcolor{keyword}{decltype}(\textcolor{keyword}{auto})}
+\DoxyCodeLine{00161\ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_affeca8f1ee2c8463c4cce6c26fbb7fbf}{maybe\_par\_unseq}}(F\ functor,\ \textcolor{keywordtype}{size\_t}\ n\_iters)}
+\DoxyCodeLine{00162\ \ \ \textcolor{keyword}{requires}(std::is\_invocable\_v<F,\ std::execution::unsequenced\_policy>)}
+\DoxyCodeLine{00163\ \{}
+\DoxyCodeLine{00164\ \ \ \textcolor{keywordtype}{bool}\ par\ =\ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_a4affae15a4b97dee11b0d7d180cfdf75}{parallelize<M>}}(n\_iters);}
+\DoxyCodeLine{00165\ \ \ \textcolor{keywordflow}{return}\ par\ ?\ functor(std::execution::par\_unseq)}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ functor(std::execution::unseq);}
+\DoxyCodeLine{00167\ \}}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \}\ \textcolor{comment}{//\ namespace\ execution}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00174\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00175\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structMatrixTraits_1_1norm__type}{norm\_type}}}
+\DoxyCodeLine{00176\ \{}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00181\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structMatrixTraits_1_1norm__type_af5601dbd8cf4a9b0acccae7f9982d220}{type}}\ =\ T;}
+\DoxyCodeLine{00182\ \};}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00187\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ IT>}
+\DoxyCodeLine{00188\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structMatrixTraits_1_1norm__type}{norm\_type}}<std::complex<IT>>}
+\DoxyCodeLine{00189\ \{}
+\DoxyCodeLine{00193\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structMatrixTraits_1_1norm__type_3_01std_1_1complex_3_01IT_01_4_01_4_ac31930a2e403da997fe6aa5296f1d684}{type}}\ =\ IT;}
+\DoxyCodeLine{00194\ \};}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00201\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ StorageOrder\ =\ StorageOrder::ROWMAJOR>}
+\DoxyCodeLine{00202\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structMatrixTraits_1_1comp__op}{comp\_op}}\ :\ std::less<std::array<T,\ 2>>}
+\DoxyCodeLine{00203\ \{\};}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00211\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00212\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structMatrixTraits_1_1comp__op}{comp\_op}}<T,\ \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{StorageOrder}}::\mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32af04a3c791aa353b2385ff97d431330fc}{COLMAJOR}}>}
+\DoxyCodeLine{00213\ \{}
+\DoxyCodeLine{00217\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structMatrixTraits_1_1comp__op_3_01T_00_01StorageOrder_1_1COLMAJOR_01_4_a824eec02b54efd85196650250eac0311}{operator()}}(\textcolor{keyword}{const}\ std::array<T,\ 2>\&\ ab,}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::array<T,\ 2>\&\ ij)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00219\ \textcolor{keyword}{\ \ }\{}
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keywordflow}{return}\ ab[1]\ ==\ ij[1]\ ?\ ab[0]\ <\ ij[0]\ :\ ab[1]\ <\ ij[1];}
+\DoxyCodeLine{00221\ \ \ \}}
+\DoxyCodeLine{00222\ \};}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \}\ \textcolor{comment}{//\ namespace\ MatrixTraits}}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

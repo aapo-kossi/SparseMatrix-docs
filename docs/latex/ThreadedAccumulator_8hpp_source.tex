@@ -1,0 +1,94 @@
+\doxysection{Threaded\+Accumulator.\+hpp}
+\hypertarget{ThreadedAccumulator_8hpp_source}{}\label{ThreadedAccumulator_8hpp_source}\index{include/ThreadedAccumulator.hpp@{include/ThreadedAccumulator.hpp}}
+\mbox{\hyperlink{ThreadedAccumulator_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ THREADEDACCUMULATOR\_HEADER}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ THREADEDACCUMULATOR\_HEADER}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <execution>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00026\ \textcolor{keyword}{class\ }ThreadedAccumulator}
+\DoxyCodeLine{00027\ \{}
+\DoxyCodeLine{00028\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00029\ \ \ std::vector<T>\ l\_buffer;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ g\_size;}
+\DoxyCodeLine{00032\ \ \ \textcolor{keyword}{static}\ std::mutex\ g\_lock;}
+\DoxyCodeLine{00033\ \ \ \textcolor{keyword}{static}\ std::vector<ThreadedAccumulator<T>*>\ g\_accumulators;}
+\DoxyCodeLine{00034\ \ \ \textcolor{keyword}{static}\ std::vector<T>\ g\_buffer;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{thread\_local}\ ThreadedAccumulator<T>\ l\_accumulator;}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00042\ \ \ ThreadedAccumulator()}
+\DoxyCodeLine{00043\ \ \ \ \ :\ l\_buffer(g\_size,\ T\{\})}
+\DoxyCodeLine{00044\ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ std::lock\_guard\ g(g\_lock);}
+\DoxyCodeLine{00046\ \ \ \ \ g\_accumulators.push\_back(\textcolor{keyword}{this});}
+\DoxyCodeLine{00047\ \ \ \}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00056\ \ \ \string~ThreadedAccumulator()}
+\DoxyCodeLine{00057\ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ std::lock\_guard\ g(g\_lock);}
+\DoxyCodeLine{00059\ \ \ \ \ std::transform(std::execution::unseq,}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ g\_buffer.begin(),}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ g\_buffer.end(),}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_buffer.begin(),}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ g\_buffer.begin(),}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::plus<T>\{\});}
+\DoxyCodeLine{00065\ \ \ \ \ g\_accumulators.erase(}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ std::remove(g\_accumulators.begin(),\ g\_accumulators.end(),\ \textcolor{keyword}{this}),}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ g\_accumulators.end());}
+\DoxyCodeLine{00068\ \ \ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00074\ \ \ std::vector<T>\&\ l\_vec()\ \{\ \textcolor{keywordflow}{return}\ l\_buffer;\ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00082\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classThreadedAccumulator_aa06d854ee051c7c8ba1fb9ff4ee05069}{set\_size}}(\textcolor{keywordtype}{size\_t}\ size)}
+\DoxyCodeLine{00083\ \ \ \{}
+\DoxyCodeLine{00084\ \ \ \ \ std::lock\_guard\ g(g\_lock);}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ g\_size\ =\ size;}
+\DoxyCodeLine{00087\ \ \ \ \ g\_buffer.resize(g\_size);}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ accumulator\ :\ g\_accumulators)\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ accumulator-\/>l\_buffer.resize(g\_size);}
+\DoxyCodeLine{00090\ \ \ \ \ \}}
+\DoxyCodeLine{00091\ \ \ \};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00098\ \ \ \textcolor{keyword}{static}\ std::vector<T>\&\ \mbox{\hyperlink{classThreadedAccumulator_abc15b5c237da769787e1f9a64be711b6}{vec}}()\ \{\ \textcolor{keywordflow}{return}\ l\_accumulator.l\_vec();\ \}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00105\ \ \ \textcolor{keyword}{static}\ std::vector<T>\&\&\ \mbox{\hyperlink{classThreadedAccumulator_aa030cb24512f3abdc3f5b759e067014c}{result}}()}
+\DoxyCodeLine{00106\ \ \ \{}
+\DoxyCodeLine{00107\ \ \ \ \ std::unique\_lock\ g(g\_lock);}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{comment}{//\ add\ local\ results\ to\ the\ global\ value}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ accumulator\ :\ g\_accumulators)\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ std::transform(std::execution::unseq,}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ g\_buffer.begin(),}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ g\_buffer.end(),}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ accumulator-\/>l\_buffer.begin(),}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ g\_buffer.begin(),}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::plus<T>\{\});}
+\DoxyCodeLine{00117\ \ \ \ \ \}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordflow}{return}\ std::move(g\_buffer);}
+\DoxyCodeLine{00120\ \ \ \};}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00128\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classThreadedAccumulator_a98d3d5eabdef288bbe5be4acae0af328}{reset}}()}
+\DoxyCodeLine{00129\ \ \ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ Make\ sure\ no\ other\ threads\ are\ writing!!!}}
+\DoxyCodeLine{00131\ \ \ \ \ std::unique\_lock\ g(g\_lock);}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ accumulator\ :\ g\_accumulators)\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ accumulator-\/>l\_buffer.assign(g\_size,\ T\{\});}
+\DoxyCodeLine{00134\ \ \ \ \ \}}
+\DoxyCodeLine{00135\ \ \ \ \ g\_buffer.assign(g\_size,\ T\{\});}
+\DoxyCodeLine{00136\ \ \ \}}
+\DoxyCodeLine{00137\ \};}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,35 @@
+\doxysection{Matrix\+Traits\+::comp\+\_\+op\texorpdfstring{$<$}{<} T, Storage\+Order\+::COLMAJOR \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structMatrixTraits_1_1comp__op_3_01T_00_01StorageOrder_1_1COLMAJOR_01_4}{}\label{structMatrixTraits_1_1comp__op_3_01T_00_01StorageOrder_1_1COLMAJOR_01_4}\index{MatrixTraits::comp\_op$<$ T, StorageOrder::COLMAJOR $>$@{MatrixTraits::comp\_op$<$ T, StorageOrder::COLMAJOR $>$}}
+
+
+Defines the comparison operator for COOmap matrices.  
+
+
+
+
+{\ttfamily \#include $<$Matrix\+Traits.\+hpp$>$}
+
+Inheritance diagram for Matrix\+Traits\+::comp\+\_\+op\texorpdfstring{$<$}{<} T, Storage\+Order\+::COLMAJOR \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{structMatrixTraits_1_1comp__op_3_01T_00_01StorageOrder_1_1COLMAJOR_01_4}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structMatrixTraits_1_1comp__op_3_01T_00_01StorageOrder_1_1COLMAJOR_01_4_a824eec02b54efd85196650250eac0311}\label{structMatrixTraits_1_1comp__op_3_01T_00_01StorageOrder_1_1COLMAJOR_01_4_a824eec02b54efd85196650250eac0311} 
+constexpr bool {\bfseries operator()} (const std\+::array$<$ T, 2 $>$ \&ab, const std\+::array$<$ T, 2 $>$ \&ij) const
+\begin{DoxyCompactList}\small\item\em Defines column-\/by-\/column ordering. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+struct Matrix\+Traits\+::comp\+\_\+op$<$ T, Storage\+Order\+::\+COLMAJOR $>$}
+Defines the comparison operator for COOmap matrices. 
+
+Column major indices need to primarily compare the column index, and only for values in the same column compare the row number 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{MatrixTraits_8hpp}{Matrix\+Traits.\+hpp}}\end{DoxyCompactItemize}

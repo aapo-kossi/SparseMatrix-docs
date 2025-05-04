@@ -1,0 +1,404 @@
+\doxysection{algebra\+::Matrix\texorpdfstring{$<$}{<} T, O, I \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classalgebra_1_1Matrix}{}\label{classalgebra_1_1Matrix}\index{algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}}
+
+
+Represents a sparse mathematical matrix.  
+
+
+
+
+{\ttfamily \#include $<$Matrix.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classalgebra_1_1Matrix_a8fb0b076bc48bb2d1a3c1b874c9e7722}\label{classalgebra_1_1Matrix_a8fb0b076bc48bb2d1a3c1b874c9e7722} 
+using {\bfseries value\+\_\+type} = T
+\begin{DoxyCompactList}\small\item\em Alias for the matrix element type. \end{DoxyCompactList}\item 
+\Hypertarget{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}\label{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916} 
+using {\bfseries index\+\_\+t} = I
+\begin{DoxyCompactList}\small\item\em Alias for the row and column index type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classalgebra_1_1Matrix_a74ee5d9890d3fd84c7fcba96c0b740b4}\label{classalgebra_1_1Matrix_a74ee5d9890d3fd84c7fcba96c0b740b4} 
+{\bfseries Matrix} ()=default
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classalgebra_1_1Matrix_a5468aff7857b36a39cd3095d1ad6ff69}{Matrix}} (\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} n, \mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} m)
+\begin{DoxyCompactList}\small\item\em Constructs a \doxylink{classalgebra_1_1Matrix}{Matrix} with a given size. \end{DoxyCompactList}\item 
+\Hypertarget{classalgebra_1_1Matrix_a4b7d62824e31954ceb7d24e4756039e1}\label{classalgebra_1_1Matrix_a4b7d62824e31954ceb7d24e4756039e1} 
+{\bfseries Matrix} (const \mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ T, O, I $>$ \&m)
+\begin{DoxyCompactList}\small\item\em copy-\/constructor \end{DoxyCompactList}\item 
+\Hypertarget{classalgebra_1_1Matrix_a678ee08f4ff447338d2e547465fad0ef}\label{classalgebra_1_1Matrix_a678ee08f4ff447338d2e547465fad0ef} 
+{\bfseries Matrix} (\mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ T, O, I $>$ \&\&m)
+\begin{DoxyCompactList}\small\item\em move-\/constructor \end{DoxyCompactList}\item 
+\Hypertarget{classalgebra_1_1Matrix_a20173f8bebf75f5af574caf956138bdf}\label{classalgebra_1_1Matrix_a20173f8bebf75f5af574caf956138bdf} 
+\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} {\bfseries rows} () const
+\begin{DoxyCompactList}\small\item\em Gets the number of rows in this matrix. \end{DoxyCompactList}\item 
+\Hypertarget{classalgebra_1_1Matrix_af3b14c18eef893668164c68f3c36f361}\label{classalgebra_1_1Matrix_af3b14c18eef893668164c68f3c36f361} 
+\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} {\bfseries cols} () const
+\begin{DoxyCompactList}\small\item\em Gets the number of columns in this matrix. \end{DoxyCompactList}\item 
+std\+::span$<$ T $>$ \mbox{\hyperlink{classalgebra_1_1Matrix_af5cf36b7387a601f9ad1bfecf2b03ae3}{operator\mbox{[}$\,$\mbox{]}}} (\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} i\+\_\+major)
+\begin{DoxyCompactList}\small\item\em Accesses a single compressed row (column) of a CSR (CSC) \doxylink{classalgebra_1_1Matrix}{Matrix}. \end{DoxyCompactList}\item 
+std\+::span$<$ T const $>$ \mbox{\hyperlink{classalgebra_1_1Matrix_aeee5759a94d105cd61935bcf4c03aeb4}{operator\mbox{[}$\,$\mbox{]}}} (\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} i\+\_\+major) const
+\begin{DoxyCompactList}\small\item\em Accesses write-\/only compressed row (column) of a CSR (CSC) \doxylink{classalgebra_1_1Matrix}{Matrix}. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classalgebra_1_1Matrix_aea0e25f3d5235e9cddf881c7389deab4}{operator()}} (\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} i\+\_\+major)
+\begin{DoxyCompactList}\small\item\em Accesses uncompressed row (column) of a CSR (CSC) \doxylink{classalgebra_1_1Matrix}{Matrix}. \end{DoxyCompactList}\item 
+T \mbox{\hyperlink{classalgebra_1_1Matrix_a1ba4adc7ae5bb02b16a9ae10455ce29a}{operator()}} (\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} i, \mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} j) const
+\begin{DoxyCompactList}\small\item\em Accesses single matrix element by value. \end{DoxyCompactList}\item 
+T \& \mbox{\hyperlink{classalgebra_1_1Matrix_aa7a85f2a2aaac7c28510bdbef21eacce}{operator()}} (\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} i, \mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} j)
+\begin{DoxyCompactList}\small\item\em Accesses single matrix element by reference. \end{DoxyCompactList}\item 
+\Hypertarget{classalgebra_1_1Matrix_a3de98df83674d146e1736c0e7d880685}\label{classalgebra_1_1Matrix_a3de98df83674d146e1736c0e7d880685} 
+std\+::span$<$ T $>$ {\bfseries compressed\+\_\+row} (\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} i)
+\begin{DoxyCompactList}\small\item\em See \doxylink{classalgebra_1_1Matrix_af5cf36b7387a601f9ad1bfecf2b03ae3}{operator\mbox{[}$\,$\mbox{]}(index\+\_\+t i\+\_\+major)} \end{DoxyCompactList}\item 
+\Hypertarget{classalgebra_1_1Matrix_a27a2b54ae758144308df0ec75e974722}\label{classalgebra_1_1Matrix_a27a2b54ae758144308df0ec75e974722} 
+std\+::span$<$ T $>$ {\bfseries compressed\+\_\+col} (\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} j)
+\begin{DoxyCompactList}\small\item\em See \doxylink{classalgebra_1_1Matrix_af5cf36b7387a601f9ad1bfecf2b03ae3}{operator\mbox{[}$\,$\mbox{]}(index\+\_\+t i\+\_\+major)} \end{DoxyCompactList}\item 
+\Hypertarget{classalgebra_1_1Matrix_a9de0a69a4e2f5076cee7e61f0bd0d30b}\label{classalgebra_1_1Matrix_a9de0a69a4e2f5076cee7e61f0bd0d30b} 
+auto {\bfseries uncompressed\+\_\+row} (\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} i)
+\begin{DoxyCompactList}\small\item\em See \doxylink{classalgebra_1_1Matrix_aea0e25f3d5235e9cddf881c7389deab4}{operator()(index\+\_\+t i\+\_\+major)} \end{DoxyCompactList}\item 
+\Hypertarget{classalgebra_1_1Matrix_ab5e0b89e31f4fa9a6e8f21a59098984f}\label{classalgebra_1_1Matrix_ab5e0b89e31f4fa9a6e8f21a59098984f} 
+auto {\bfseries uncompressed\+\_\+col} (\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} j)
+\begin{DoxyCompactList}\small\item\em See \doxylink{classalgebra_1_1Matrix_aea0e25f3d5235e9cddf881c7389deab4}{operator()(index\+\_\+t i\+\_\+major)} \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ T, O, I $>$ \& \mbox{\hyperlink{classalgebra_1_1Matrix_ae1499b36946c0fbe2af94054debed031}{resize}} (\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} new\+\_\+rows, \mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}} new\+\_\+cols)
+\begin{DoxyCompactList}\small\item\em Resizes the \doxylink{classalgebra_1_1Matrix}{Matrix}. \end{DoxyCompactList}\item 
+\Hypertarget{classalgebra_1_1Matrix_ab42c34c1908f82a6cb004f2aceffcd1c}\label{classalgebra_1_1Matrix_ab42c34c1908f82a6cb004f2aceffcd1c} 
+bool {\bfseries is\+\_\+compressed} () const
+\begin{DoxyCompactList}\small\item\em Gets the current compression state of the \doxylink{classalgebra_1_1Matrix}{Matrix}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Matrix\+Traits\+::execution\+::\+Mode}} Mode = Matrix\+Traits\+::execution\+::\+Mode\+::\+Sequential$>$ }\\\mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ T, O, I $>$ \& \mbox{\hyperlink{classalgebra_1_1Matrix_a46487dd988947f4439bffecc910a1e78}{compress}} ()
+\begin{DoxyCompactList}\small\item\em Compresses the \doxylink{classalgebra_1_1Matrix}{Matrix}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ T, O, I $>$ \& \mbox{\hyperlink{classalgebra_1_1Matrix_a27c2749776694423af9e95757f58e529}{uncompress}} ()
+\begin{DoxyCompactList}\small\item\em Uncompresses the \doxylink{classalgebra_1_1Matrix}{Matrix}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75}{Matrix\+Traits\+::\+Norm}} N, \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Matrix\+Traits\+::execution\+::\+Mode}} M = Matrix\+Traits\+::execution\+::\+Mode\+::\+Auto$>$ }\\auto \mbox{\hyperlink{classalgebra_1_1Matrix_af3bfe729d0ca0060cc1a631a56728b52}{norm}} () const
+\begin{DoxyCompactList}\small\item\em Calculates Matrix-\/norms. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classalgebra_1_1Matrix_a3a20039626b522d37b1327d460443dde}\label{classalgebra_1_1Matrix_a3a20039626b522d37b1327d460443dde} 
+static constexpr \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} {\bfseries storage\+\_\+order} = O
+\begin{DoxyCompactList}\small\item\em Alias for the storage order. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ T $>$ \mbox{\hyperlink{classalgebra_1_1Matrix_a219f373edf9169601051c5ac3d3e6728}{operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ T, O, I $>$ \&mat, const std\+::vector$<$ T $>$ \&vec)
+\begin{DoxyCompactList}\small\item\em Matrix-\/vector multiplication with a std\+::vector x. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} OO$>$ }\\std\+::vector$<$ T $>$ \mbox{\hyperlink{classalgebra_1_1Matrix_a06ca96bab918144fac7f9e5fedf74412}{operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ T, O, I $>$ \&mat, const \mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ T, OO $>$ \&vec)
+\begin{DoxyCompactList}\small\item\em Matrix-\/vector multiplication with a single-\/column \doxylink{classalgebra_1_1Matrix}{Matrix} x. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} TT, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} OO$>$ }\\bool \mbox{\hyperlink{classalgebra_1_1Matrix_a3f124c0ed60d8a734da066c0cb59c4c7}{matrix\+\_\+market\+\_\+read}} (const std\+::string \&file\+\_\+name, \mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ TT, OO $>$ \&mat)
+\begin{DoxyCompactList}\small\item\em Loads matrix content from a file in the Matrix\+Market format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O, std\+::integral I = index\+\_\+type$<$\+T$>$\+::type$>$\newline
+class algebra\+::\+Matrix$<$ T, O, I $>$}
+Represents a sparse mathematical matrix. 
+
+This class provides functionality for storing and operating on sparse matrices of arithmetic or complex values. A sparse matrix can be stored in row-\/major or column major format, corresponding to the dimension with larger stride when iterating the matrix elements. In memory, a \doxylink{classalgebra_1_1Matrix}{Matrix} may be stored in compressed or uncompressed format. An uncompressed matrix may freely be modified by assigning, inserting or deleting elements at an arbitrary position. An ordered map is used with such an ordering that the map is efficiently iterated in row-\/major or column-\/major order.
+
+A compressed matrix is stored as compressed sparse row (column) format for row-\/major (column-\/major) ordering. Use compressed formats for efficient calculations.
+
+The choice of storage order depends on if access to sliced rows or columns is needed more often, since major axis slicing results in sequentially iterating the stored data, whereas slicing the minor axis always requires sparse memory accesses.
+
+By default, a \doxylink{classalgebra_1_1Matrix}{Matrix} is indexed by an unsigned integer type matching the size of the stored elements, or in the case of complex valued elements, the size of the real and imaginary components.
+
+The maximum number of rows and columns of the matrix is limited by the size of I, and the number of non-\/zero elements cannot exceed the maximum value of the size\+\_\+t type.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the matrix elements \\
+\hline
+{\em O} & The storage order (row-\/major or column-\/major) \\
+\hline
+{\em I} & The type used to index the rows and columns of the \doxylink{classalgebra_1_1Matrix}{Matrix} \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classalgebra_1_1Matrix_a5468aff7857b36a39cd3095d1ad6ff69}\index{algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}!Matrix@{Matrix}}
+\index{Matrix@{Matrix}!algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}}
+\doxysubsubsection{\texorpdfstring{Matrix()}{Matrix()}}
+{\footnotesize\ttfamily \label{classalgebra_1_1Matrix_a5468aff7857b36a39cd3095d1ad6ff69} 
+template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O, std\+::integral I$>$ \\
+\mbox{\hyperlink{classalgebra_1_1Matrix}{algebra\+::\+Matrix}}$<$ T, O, I $>$\+::\+Matrix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}}}]{n}{, }\item[{\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}}}]{m}{}\end{DoxyParamCaption})}
+
+
+
+Constructs a \doxylink{classalgebra_1_1Matrix}{Matrix} with a given size. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of rows \\
+\hline
+{\em m} & Number of columns \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classalgebra_1_1Matrix_a46487dd988947f4439bffecc910a1e78}\index{algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}!compress@{compress}}
+\index{compress@{compress}!algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}}
+\doxysubsubsection{\texorpdfstring{compress()}{compress()}}
+{\footnotesize\ttfamily \label{classalgebra_1_1Matrix_a46487dd988947f4439bffecc910a1e78} 
+template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O, std\+::integral I$>$ \\
+template$<$\mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Matrix\+Traits\+::execution\+::\+Mode}} Mode$>$ \\
+\mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ T, O, I $>$ \& \mbox{\hyperlink{classalgebra_1_1Matrix}{algebra\+::\+Matrix}}$<$ T, O, I $>$\+::compress (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Compresses the \doxylink{classalgebra_1_1Matrix}{Matrix}. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Mode} & Specifies whether the compression should parallelize \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+A reference to the compressed \doxylink{classalgebra_1_1Matrix}{Matrix} 
+\end{DoxyReturn}
+\Hypertarget{classalgebra_1_1Matrix_af3bfe729d0ca0060cc1a631a56728b52}\index{algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}!norm@{norm}}
+\index{norm@{norm}!algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}}
+\doxysubsubsection{\texorpdfstring{norm()}{norm()}}
+{\footnotesize\ttfamily \label{classalgebra_1_1Matrix_af3bfe729d0ca0060cc1a631a56728b52} 
+template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O, std\+::integral I = index\+\_\+type$<$\+T$>$\+::type$>$ \\
+template$<$\mbox{\hyperlink{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75}{Matrix\+Traits\+::\+Norm}} N, \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Matrix\+Traits\+::execution\+::\+Mode}} M = Matrix\+Traits\+::execution\+::\+Mode\+::\+Auto$>$ \\
+auto \mbox{\hyperlink{classalgebra_1_1Matrix}{algebra\+::\+Matrix}}$<$ T, O, I $>$\+::norm (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Calculates Matrix-\/norms. 
+
+Available norms are the $L^1$, $L^{\infty}$, and Frobenius norms
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & the kind of norm to calculate $p \in \{1,\infty,F\}$ \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+$||A||_p$ 
+\end{DoxyReturn}
+\Hypertarget{classalgebra_1_1Matrix_aa7a85f2a2aaac7c28510bdbef21eacce}\index{algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{classalgebra_1_1Matrix_aa7a85f2a2aaac7c28510bdbef21eacce} 
+template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O, std\+::integral I = index\+\_\+type$<$\+T$>$\+::type$>$ \\
+T \& \mbox{\hyperlink{classalgebra_1_1Matrix}{algebra\+::\+Matrix}}$<$ T, O, I $>$\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}}}]{i}{, }\item[{\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}}}]{j}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accesses single matrix element by reference. 
+
+\begin{DoxyPrecond}{Precondition}
+A reference to the value at an index which currently has no value stored cannot be accessed for a compressed \doxylink{classalgebra_1_1Matrix}{Matrix}, as this would require inserting a new value to the structure.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em i} & the zero-\/based row index \\
+\hline
+{\em j} & the zero-\/based column index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$A_{i,j}$ 
+\end{DoxyReturn}
+\Hypertarget{classalgebra_1_1Matrix_a1ba4adc7ae5bb02b16a9ae10455ce29a}\index{algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{classalgebra_1_1Matrix_a1ba4adc7ae5bb02b16a9ae10455ce29a} 
+template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O, std\+::integral I = index\+\_\+type$<$\+T$>$\+::type$>$ \\
+T \mbox{\hyperlink{classalgebra_1_1Matrix}{algebra\+::\+Matrix}}$<$ T, O, I $>$\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}}}]{i}{, }\item[{\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}}}]{j}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accesses single matrix element by value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & the zero-\/based row index \\
+\hline
+{\em j} & the zero-\/based column index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$A_{i,j}$ 
+\end{DoxyReturn}
+\Hypertarget{classalgebra_1_1Matrix_aea0e25f3d5235e9cddf881c7389deab4}\index{algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{classalgebra_1_1Matrix_aea0e25f3d5235e9cddf881c7389deab4} 
+template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O, std\+::integral I$>$ \\
+auto \mbox{\hyperlink{classalgebra_1_1Matrix}{algebra\+::\+Matrix}}$<$ T, O, I $>$\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}}}]{i\+\_\+major}{}\end{DoxyParamCaption})}
+
+
+
+Accesses uncompressed row (column) of a CSR (CSC) \doxylink{classalgebra_1_1Matrix}{Matrix}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i\+\_\+major} & The zero-\/based row or column index
+
+For row-\/major storage ordering, this is the index of the accessed row. For column-\/major storage ordering, this is the accessed column. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pair of iterators denoting the begin and end of the row (column) 
+\end{DoxyReturn}
+\Hypertarget{classalgebra_1_1Matrix_af5cf36b7387a601f9ad1bfecf2b03ae3}\index{algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classalgebra_1_1Matrix_af5cf36b7387a601f9ad1bfecf2b03ae3} 
+template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O, std\+::integral I$>$ \\
+std\+::span$<$ T $>$ \mbox{\hyperlink{classalgebra_1_1Matrix}{algebra\+::\+Matrix}}$<$ T, O, I $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}}}]{i\+\_\+major}{}\end{DoxyParamCaption})}
+
+
+
+Accesses a single compressed row (column) of a CSR (CSC) \doxylink{classalgebra_1_1Matrix}{Matrix}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i\+\_\+major} & The zero-\/based row or column index
+
+For row-\/major storage ordering, this is the index of the accessed row. For column-\/major storage ordering, this is the accessed column. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A std\+::span$<$value\+\_\+type$>$ with all non-\/zero row (column) values 
+\end{DoxyReturn}
+\Hypertarget{classalgebra_1_1Matrix_aeee5759a94d105cd61935bcf4c03aeb4}\index{algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classalgebra_1_1Matrix_aeee5759a94d105cd61935bcf4c03aeb4} 
+template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O, std\+::integral I$>$ \\
+std\+::span$<$ T const $>$ \mbox{\hyperlink{classalgebra_1_1Matrix}{algebra\+::\+Matrix}}$<$ T, O, I $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}}}]{i\+\_\+major}{}\end{DoxyParamCaption}) const}
+
+
+
+Accesses write-\/only compressed row (column) of a CSR (CSC) \doxylink{classalgebra_1_1Matrix}{Matrix}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i\+\_\+major} & The zero-\/based row or column index
+
+For row-\/major storage ordering, this is the index of the accessed row. For column-\/major storage ordering, this is the accessed column. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A std\+::span$<$value\+\_\+type const$>$ with all non-\/zero row (column) values 
+\end{DoxyReturn}
+\Hypertarget{classalgebra_1_1Matrix_ae1499b36946c0fbe2af94054debed031}\index{algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}!resize@{resize}}
+\index{resize@{resize}!algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}}
+\doxysubsubsection{\texorpdfstring{resize()}{resize()}}
+{\footnotesize\ttfamily \label{classalgebra_1_1Matrix_ae1499b36946c0fbe2af94054debed031} 
+template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O, std\+::integral I$>$ \\
+\mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ T, O, I $>$ \& \mbox{\hyperlink{classalgebra_1_1Matrix}{algebra\+::\+Matrix}}$<$ T, O, I $>$\+::resize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}}}]{new\+\_\+rows}{, }\item[{\mbox{\hyperlink{classalgebra_1_1Matrix_a80470f4fb0eeb95a9e41229cf08b4916}{index\+\_\+t}}}]{new\+\_\+cols}{}\end{DoxyParamCaption})}
+
+
+
+Resizes the \doxylink{classalgebra_1_1Matrix}{Matrix}. 
+
+The matrix will be left in an uncompressed state regardless of it\textquotesingle{}s original state. Elements that are out-\/of-\/bounds after the operation are deleted.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+rows} & The new number of rows \\
+\hline
+{\em new\+\_\+cols} & The new number of columns \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classalgebra_1_1Matrix_a27c2749776694423af9e95757f58e529}\index{algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}!uncompress@{uncompress}}
+\index{uncompress@{uncompress}!algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}}
+\doxysubsubsection{\texorpdfstring{uncompress()}{uncompress()}}
+{\footnotesize\ttfamily \label{classalgebra_1_1Matrix_a27c2749776694423af9e95757f58e529} 
+template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O, std\+::integral I$>$ \\
+\mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ T, O, I $>$ \& \mbox{\hyperlink{classalgebra_1_1Matrix}{algebra\+::\+Matrix}}$<$ T, O, I $>$\+::uncompress (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Uncompresses the \doxylink{classalgebra_1_1Matrix}{Matrix}. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the compressed \doxylink{classalgebra_1_1Matrix}{Matrix} 
+\end{DoxyReturn}
+
+
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{classalgebra_1_1Matrix_a3f124c0ed60d8a734da066c0cb59c4c7}\index{algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}!matrix\_market\_read@{matrix\_market\_read}}
+\index{matrix\_market\_read@{matrix\_market\_read}!algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}}
+\doxysubsubsection{\texorpdfstring{matrix\_market\_read}{matrix\_market\_read}}
+{\footnotesize\ttfamily \label{classalgebra_1_1Matrix_a3f124c0ed60d8a734da066c0cb59c4c7} 
+template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O, std\+::integral I = index\+\_\+type$<$\+T$>$\+::type$>$ \\
+template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} TT, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} OO$>$ \\
+bool matrix\+\_\+market\+\_\+read (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{file\+\_\+name}{, }\item[{\mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ TT, OO $>$ \&}]{mat}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Loads matrix content from a file in the Matrix\+Market format. 
+
+The matrix size will be set according to the Matrix\+Market file. The datatype specified in the input file should match the type of the \doxylink{classalgebra_1_1Matrix}{Matrix}.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em TT} & the datatype of the stored elements \\
+\hline
+{\em OO} & the storage order of the loaded matrix \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em file\+\_\+name} & The Matrix\+Market file from which to read the data \\
+\hline
+{\em mat} & The \doxylink{classalgebra_1_1Matrix}{Matrix} in which to insert the content \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A boolean indicating a successful load of the data 
+\end{DoxyReturn}
+\Hypertarget{classalgebra_1_1Matrix_a06ca96bab918144fac7f9e5fedf74412}\index{algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}}{operator*}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classalgebra_1_1Matrix_a06ca96bab918144fac7f9e5fedf74412} 
+template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O, std\+::integral I = index\+\_\+type$<$\+T$>$\+::type$>$ \\
+template$<$\mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} OO$>$ \\
+std\+::vector$<$ T $>$ operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ T, O, I $>$ \&}]{mat}{, }\item[{const \mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ T, OO $>$ \&}]{vec}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Matrix-\/vector multiplication with a single-\/column \doxylink{classalgebra_1_1Matrix}{Matrix} x. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mat} & The input \doxylink{classalgebra_1_1Matrix}{Matrix} $A$ \\
+\hline
+{\em vec} & The input column vector $x$ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$Ax$ 
+\end{DoxyReturn}
+\Hypertarget{classalgebra_1_1Matrix_a219f373edf9169601051c5ac3d3e6728}\index{algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!algebra::Matrix$<$ T, O, I $>$@{algebra::Matrix$<$ T, O, I $>$}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}}{operator*}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classalgebra_1_1Matrix_a219f373edf9169601051c5ac3d3e6728} 
+template$<$\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}} T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O, std\+::integral I = index\+\_\+type$<$\+T$>$\+::type$>$ \\
+std\+::vector$<$ T $>$ operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}$<$ T, O, I $>$ \&}]{mat}{, }\item[{const std\+::vector$<$ T $>$ \&}]{vec}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Matrix-\/vector multiplication with a std\+::vector x. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mat} & The input \doxylink{classalgebra_1_1Matrix}{Matrix} $A$ \\
+\hline
+{\em vec} & The input column vector $x$ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$Ax$ 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{Matrix_8hpp}{Matrix.\+hpp}}\end{DoxyCompactItemize}

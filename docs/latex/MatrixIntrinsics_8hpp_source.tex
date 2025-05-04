@@ -1,0 +1,328 @@
+\doxysection{Matrix\+Intrinsics.\+hpp}
+\hypertarget{MatrixIntrinsics_8hpp_source}{}\label{MatrixIntrinsics_8hpp_source}\index{include/MatrixIntrinsics.hpp@{include/MatrixIntrinsics.hpp}}
+\mbox{\hyperlink{MatrixIntrinsics_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ INTRINSICS\_HEADER}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ INTRINSICS\_HEADER}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifdef\ \_\_AVX512VL\_\_}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <immintrin.h>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <tuple>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{CanonicalTypes_8hpp}{CanonicalTypes.hpp}}"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00017\ \textcolor{keyword}{struct\ }intrinsics\ :\ \textcolor{keyword}{public}\ intrinsics<typename\ canonical\_t<T>::type>}
+\DoxyCodeLine{00018\ \{\};}
+\DoxyCodeLine{00019\ ;}
+\DoxyCodeLine{00020\ \textcolor{keyword}{struct\ }common\_64bit\_intrinsics}
+\DoxyCodeLine{00021\ \{}
+\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512i\ load\_idx(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ a)}
+\DoxyCodeLine{00023\ \ \ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_loadu\_epi64(a);}
+\DoxyCodeLine{00025\ \ \ \};}
+\DoxyCodeLine{00026\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ get\_separated\_idx()}
+\DoxyCodeLine{00027\ \ \ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_set\_epi64(0,\ 4,\ 1,\ 5,\ 2,\ 6,\ 3,\ 7);}
+\DoxyCodeLine{00029\ \ \ \};}
+\DoxyCodeLine{00030\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ permute(\_\_m512i\ src,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m512i\ idx)}
+\DoxyCodeLine{00032\ \ \ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_permutexvar\_epi64(src,\ idx);}
+\DoxyCodeLine{00034\ \ \ \};}
+\DoxyCodeLine{00035\ \};}
+\DoxyCodeLine{00036\ \textcolor{keyword}{struct\ }common\_32bit\_intrinsics}
+\DoxyCodeLine{00037\ \{}
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512i\ load\_idx(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ a)}
+\DoxyCodeLine{00039\ \ \ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_loadu\_epi32(a);}
+\DoxyCodeLine{00041\ \ \ \};}
+\DoxyCodeLine{00042\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ get\_separated\_idx()}
+\DoxyCodeLine{00043\ \ \ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_set\_epi64(0,\ 4,\ 1,\ 5,\ 3,\ 6,\ 3,\ 7);}
+\DoxyCodeLine{00045\ \ \ \};}
+\DoxyCodeLine{00046\ \ \ \textcolor{comment}{//\ epi64\ is\ not\ a\ typo!\ the\ value\ ordering\ we\ have\ is}}
+\DoxyCodeLine{00047\ \ \ \textcolor{comment}{//\ [0\ 1\ 8\ 9\ 2\ 3\ 10\ 11\ ...]}}
+\DoxyCodeLine{00048\ \ \ \textcolor{comment}{//\ This\ is\ shuffled\ back\ perfectly\ by\ a\ 64\ bit\ permutation:}}
+\DoxyCodeLine{00049\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ permute(\_\_m512i\ src,}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m512i\ idx)}
+\DoxyCodeLine{00051\ \ \ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_permutexvar\_epi64(src,\ idx);}
+\DoxyCodeLine{00053\ \ \ \};}
+\DoxyCodeLine{00054\ \};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ with\ double\ precision,\ 64\ bit\ indices\ are\ used}}
+\DoxyCodeLine{00057\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00058\ \textcolor{keyword}{struct\ }intrinsics<double>\ :\ common\_64bit\_intrinsics}
+\DoxyCodeLine{00059\ \{}
+\DoxyCodeLine{00060\ \ \ \textcolor{keyword}{using\ }value\_reg\ =\ \_\_m512d;}
+\DoxyCodeLine{00061\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512d\ load(\textcolor{keywordtype}{void}\ \textcolor{keyword}{const}*\ a)}
+\DoxyCodeLine{00062\ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_loadu\_pd(a);}
+\DoxyCodeLine{00064\ \ \ \};}
+\DoxyCodeLine{00065\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512d\ add(\_\_m512d\ a,\ \_\_m512d\ b)}
+\DoxyCodeLine{00066\ \ \ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_add\_pd(a,\ b);}
+\DoxyCodeLine{00068\ \ \ \};}
+\DoxyCodeLine{00069\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512d\ mul(\_\_m512d\ a,\ \_\_m512d\ b)}
+\DoxyCodeLine{00070\ \ \ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_mul\_pd(a,\ b);}
+\DoxyCodeLine{00072\ \ \ \};}
+\DoxyCodeLine{00073\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512d\ sqrt(\_\_m512d\ x)}
+\DoxyCodeLine{00074\ \ \ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_sqrt\_pd(x);}
+\DoxyCodeLine{00076\ \ \ \};}
+\DoxyCodeLine{00077\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512d\ abs(\_\_m512d\ x)}
+\DoxyCodeLine{00078\ \ \ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_abs\_pd(x);}
+\DoxyCodeLine{00080\ \ \ \};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \textcolor{comment}{//\ Following\ intrinsics\ are\ not\ actually\ functions\ but\ macros}}
+\DoxyCodeLine{00083\ \ \ \textcolor{comment}{//\ meaning\ the\ alias\ has\ to\ either\ also\ be\ a\ macro\ (ew)\ or}}
+\DoxyCodeLine{00084\ \ \ \textcolor{comment}{//\ a\ lambda\ like\ here}}
+\DoxyCodeLine{00085\ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t}\ Scale\ =\ sizeof(\textcolor{keywordtype}{double})>}
+\DoxyCodeLine{00086\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ gather(\textcolor{keyword}{const}\ \_\_m512i\&\ idx,}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}*\ addr)}
+\DoxyCodeLine{00088\ \ \ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_i64gather\_pd(idx,\ addr,\ Scale);}
+\DoxyCodeLine{00090\ \ \ \};}
+\DoxyCodeLine{00091\ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t}\ Scale\ =\ sizeof(\textcolor{keywordtype}{double})>}
+\DoxyCodeLine{00092\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ pf\_gather(\textcolor{keyword}{const}\ \_\_m512i\&\ idx,}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}*\ addr)}
+\DoxyCodeLine{00094\ \ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_prefetch\_i64gather\_pd(idx,\ addr,\ Scale,\ 0);}
+\DoxyCodeLine{00096\ \ \ \};}
+\DoxyCodeLine{00097\ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t}\ Scale\ =\ sizeof(\textcolor{keywordtype}{double})>}
+\DoxyCodeLine{00098\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ scatter(\textcolor{keyword}{auto}*\ addr,}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512i\&\ idx,}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512d\&\ val)}
+\DoxyCodeLine{00101\ \ \ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_i64scatter\_pd(addr,\ idx,\ val,\ Scale);}
+\DoxyCodeLine{00103\ \ \ \};}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \textcolor{comment}{//\ Convert\ two\ interleaved\ format\ complex\ number\ registers}}
+\DoxyCodeLine{00106\ \ \ \textcolor{comment}{//\ to\ two\ registers\ with\ the\ real\ and\ imaginary\ parts\ of\ each\ reg}}
+\DoxyCodeLine{00107\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ separate\_complex(}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512d\&\ a,}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512d\&\ b)}
+\DoxyCodeLine{00110\ \ \ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \_\_m512d\ real\ =\ \_mm512\_unpacklo\_pd(a,\ b);}
+\DoxyCodeLine{00112\ \ \ \ \ \_\_m512d\ imag\ =\ \_mm512\_unpackhi\_pd(a,\ b);}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_tuple(real,\ imag);}
+\DoxyCodeLine{00114\ \ \ \};}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \textcolor{comment}{//\ overload}}
+\DoxyCodeLine{00117\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ permute(\_\_m512d\ src,}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m512i\ idx)}
+\DoxyCodeLine{00119\ \ \ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \_\_m512i\ src\_qword\ =\ \_mm512\_castpd\_si512(src);}
+\DoxyCodeLine{00121\ \ \ \ \ \_\_m512i\ ret\ =\ \_mm512\_permutexvar\_epi64(src\_qword,\ idx);}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_castsi512\_pd(ret);}
+\DoxyCodeLine{00123\ \ \ \};}
+\DoxyCodeLine{00124\ \};}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \textcolor{comment}{//\ with\ single\ precision,\ throughput\ is\ doubled\ by\ halving\ index\ size}}
+\DoxyCodeLine{00127\ \textcolor{comment}{//\ to\ matching\ 32\ bits}}
+\DoxyCodeLine{00128\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00129\ \textcolor{keyword}{struct\ }intrinsics<float>\ :\ common\_32bit\_intrinsics}
+\DoxyCodeLine{00130\ \{}
+\DoxyCodeLine{00131\ \ \ \textcolor{keyword}{using\ }value\_reg\ =\ \_\_m512;}
+\DoxyCodeLine{00132\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512\ load(\textcolor{keywordtype}{void}\ \textcolor{keyword}{const}*\ a)}
+\DoxyCodeLine{00133\ \ \ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_loadu\_ps(a);}
+\DoxyCodeLine{00135\ \ \ \};}
+\DoxyCodeLine{00136\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512\ add(\_\_m512\ a,\ \_\_m512\ b)}
+\DoxyCodeLine{00137\ \ \ \{}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_add\_ps(a,\ b);}
+\DoxyCodeLine{00139\ \ \ \};}
+\DoxyCodeLine{00140\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512\ mul(\_\_m512\ a,\ \_\_m512\ b)}
+\DoxyCodeLine{00141\ \ \ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_mul\_ps(a,\ b);}
+\DoxyCodeLine{00143\ \ \ \};}
+\DoxyCodeLine{00144\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512\ sqrt(\_\_m512\ x)}
+\DoxyCodeLine{00145\ \ \ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_sqrt\_ps(x);}
+\DoxyCodeLine{00147\ \ \ \};}
+\DoxyCodeLine{00148\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512\ abs(\_\_m512\ x)}
+\DoxyCodeLine{00149\ \ \ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_abs\_ps(x);}
+\DoxyCodeLine{00151\ \ \ \};}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t}\ Scale\ =\ sizeof(\textcolor{keywordtype}{float})>}
+\DoxyCodeLine{00154\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ gather(\textcolor{keyword}{const}\ \_\_m512i\&\ idx,}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}*\ addr)}
+\DoxyCodeLine{00156\ \ \ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_i32gather\_ps(idx,\ addr,\ Scale);}
+\DoxyCodeLine{00158\ \ \ \};}
+\DoxyCodeLine{00159\ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t}\ Scale\ =\ sizeof(\textcolor{keywordtype}{float})>}
+\DoxyCodeLine{00160\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ pf\_gather(\textcolor{keyword}{const}\ \_\_m512i\&\ idx,}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}*\ addr)}
+\DoxyCodeLine{00162\ \ \ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_prefetch\_i32gather\_ps(idx,\ addr,\ Scale,\ 0);}
+\DoxyCodeLine{00164\ \ \ \};}
+\DoxyCodeLine{00165\ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t}\ Scale\ =\ sizeof(\textcolor{keywordtype}{float})>}
+\DoxyCodeLine{00166\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ scatter(\textcolor{keyword}{auto}*\ addr,}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512i\&\ idx,}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512\&\ val)}
+\DoxyCodeLine{00169\ \ \ \{}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_i32scatter\_ps(addr,\ idx,\ val,\ Scale);}
+\DoxyCodeLine{00171\ \ \ \};}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \ \ \textcolor{comment}{//\ Convert\ two\ interleaved\ format\ complex\ number\ registers}}
+\DoxyCodeLine{00174\ \ \ \textcolor{comment}{//\ to\ two\ registers\ with\ the\ real\ and\ imaginary\ parts\ of\ each\ reg}}
+\DoxyCodeLine{00175\ \ \ \textcolor{comment}{//\ unpacks\ always\ operate\ across\ 128\ bit\ lanes\ meaning\ 32\ bit}}
+\DoxyCodeLine{00176\ \ \ \textcolor{comment}{//\ values\ require\ two\ unpacks\ to\ be\ separated}}
+\DoxyCodeLine{00177\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ separate\_complex(}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512\&\ a,}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512\&\ b)}
+\DoxyCodeLine{00180\ \ \ \{}
+\DoxyCodeLine{00181\ \ \ \ \ \_\_m512\ tmp\_real\ =\ \_mm512\_unpacklo\_ps(a,\ b);}
+\DoxyCodeLine{00182\ \ \ \ \ \_\_m512\ tmp\_imag\ =\ \_mm512\_unpackhi\_ps(a,\ b);}
+\DoxyCodeLine{00183\ \ \ \ \ \_\_m512\ real\ =\ \_mm512\_unpacklo\_ps(tmp\_real,\ tmp\_imag);}
+\DoxyCodeLine{00184\ \ \ \ \ \_\_m512\ imag\ =\ \_mm512\_unpackhi\_ps(tmp\_real,\ tmp\_imag);}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_tuple(real,\ imag);}
+\DoxyCodeLine{00186\ \ \ \};}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \ \ \textcolor{comment}{//\ overload}}
+\DoxyCodeLine{00189\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ permute(\_\_m512\ src,}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m512i\ idx)}
+\DoxyCodeLine{00191\ \ \ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \_\_m512i\ src\_qword\ =\ \_mm512\_castps\_si512(src);}
+\DoxyCodeLine{00193\ \ \ \ \ \_\_m512i\ ret\ =\ \_mm512\_permutexvar\_epi64(src\_qword,\ idx);}
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_castsi512\_ps(ret);}
+\DoxyCodeLine{00195\ \ \ \};}
+\DoxyCodeLine{00196\ \};}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \textcolor{comment}{//\ with\ 32\ bit\ ints,\ also\ use\ 32\ bit\ indices}}
+\DoxyCodeLine{00199\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00200\ \textcolor{keyword}{struct\ }intrinsics<int32\_t>\ :\ common\_32bit\_intrinsics}
+\DoxyCodeLine{00201\ \{}
+\DoxyCodeLine{00202\ \ \ \textcolor{keyword}{using\ }value\_reg\ =\ \_\_m512i;}
+\DoxyCodeLine{00203\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512i\ load(\textcolor{keywordtype}{void}\ \textcolor{keyword}{const}*\ a)}
+\DoxyCodeLine{00204\ \ \ \{}
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_loadu\_epi32(a);}
+\DoxyCodeLine{00206\ \ \ \};}
+\DoxyCodeLine{00207\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512i\ add(\_\_m512i\ a,\ \_\_m512i\ b)}
+\DoxyCodeLine{00208\ \ \ \{}
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_add\_epi32(a,\ b);}
+\DoxyCodeLine{00210\ \ \ \};}
+\DoxyCodeLine{00211\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512i\ mul(\_\_m512i\ a,\ \_\_m512i\ b)}
+\DoxyCodeLine{00212\ \ \ \{}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_mul\_epi32(a,\ b);}
+\DoxyCodeLine{00214\ \ \ \};}
+\DoxyCodeLine{00215\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ sqrt(\_\_m512i\ x)}
+\DoxyCodeLine{00216\ \ \ \{}
+\DoxyCodeLine{00217\ \ \ \ \ \_\_m512\ fp\_x\ =\ \_mm512\_cvtepi32\_ps(x);}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_sqrt\_ps(fp\_x);}
+\DoxyCodeLine{00219\ \ \ \};}
+\DoxyCodeLine{00220\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ abs(\_\_m512i\ x)}
+\DoxyCodeLine{00221\ \ \ \{}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_abs\_epi32(x);}
+\DoxyCodeLine{00223\ \ \ \};}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t}\ Scale\ =\ sizeof(\textcolor{keywordtype}{int}32\_t)>}
+\DoxyCodeLine{00226\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ gather(\textcolor{keyword}{const}\ \_\_m512i\&\ idx,}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}*\ addr)}
+\DoxyCodeLine{00228\ \ \ \{}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_i32gather\_epi32(idx,\ addr,\ Scale);}
+\DoxyCodeLine{00230\ \ \ \};}
+\DoxyCodeLine{00231\ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t}\ Scale\ =\ sizeof(\textcolor{keywordtype}{int}32\_t)>}
+\DoxyCodeLine{00232\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ pf\_gather(\textcolor{keyword}{const}\ \_\_m512i\&\ idx,}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}*\ addr)}
+\DoxyCodeLine{00234\ \ \ \{}
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_prefetch\_i32gather\_epi32(idx,\ addr,\ Scale,\ 0);}
+\DoxyCodeLine{00236\ \ \ \};}
+\DoxyCodeLine{00237\ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t}\ Scale\ =\ sizeof(\textcolor{keywordtype}{int}32\_t)>}
+\DoxyCodeLine{00238\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ scatter(\textcolor{keyword}{auto}*\ addr,}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512i\&\ idx,}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512i\&\ val)}
+\DoxyCodeLine{00241\ \ \ \{}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_i32scatter\_epi32(addr,\ idx,\ val,\ Scale);}
+\DoxyCodeLine{00243\ \ \ \};}
+\DoxyCodeLine{00244\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ separate\_complex(}
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512i\&\ a,}
+\DoxyCodeLine{00246\ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512i\&\ b)}
+\DoxyCodeLine{00247\ \ \ \{}
+\DoxyCodeLine{00248\ \ \ \ \ \_\_m512i\ tmp\_real\ =\ \_mm512\_unpacklo\_epi32(a,\ b);}
+\DoxyCodeLine{00249\ \ \ \ \ \_\_m512i\ tmp\_imag\ =\ \_mm512\_unpackhi\_epi32(a,\ b);}
+\DoxyCodeLine{00250\ \ \ \ \ \_\_m512i\ real\ =\ \_mm512\_unpacklo\_epi32(tmp\_real,\ tmp\_imag);}
+\DoxyCodeLine{00251\ \ \ \ \ \_\_m512i\ imag\ =\ \_mm512\_unpackhi\_epi32(tmp\_real,\ tmp\_imag);}
+\DoxyCodeLine{00252\ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_tuple(real,\ imag);}
+\DoxyCodeLine{00253\ \ \ \};}
+\DoxyCodeLine{00254\ \};}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00256\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00257\ \textcolor{keyword}{struct\ }intrinsics<int64\_t>\ :\ common\_64bit\_intrinsics}
+\DoxyCodeLine{00258\ \{}
+\DoxyCodeLine{00259\ \ \ \textcolor{keyword}{using\ }value\_reg\ =\ \_\_m512i;}
+\DoxyCodeLine{00260\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512i\ load(\textcolor{keywordtype}{void}\ \textcolor{keyword}{const}*\ a)}
+\DoxyCodeLine{00261\ \ \ \{}
+\DoxyCodeLine{00262\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_loadu\_epi64(a);}
+\DoxyCodeLine{00263\ \ \ \};}
+\DoxyCodeLine{00264\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512i\ add(\_\_m512i\ a,\ \_\_m512i\ b)}
+\DoxyCodeLine{00265\ \ \ \{}
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_add\_epi64(a,\ b);}
+\DoxyCodeLine{00267\ \ \ \};}
+\DoxyCodeLine{00268\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \_\_m512i\ mul(\_\_m512i\ a,\ \_\_m512i\ b)}
+\DoxyCodeLine{00269\ \ \ \{}
+\DoxyCodeLine{00270\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_mullox\_epi64(a,\ b);}
+\DoxyCodeLine{00271\ \ \ \};}
+\DoxyCodeLine{00272\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ sqrt(\_\_m512i\ x)}
+\DoxyCodeLine{00273\ \ \ \{}
+\DoxyCodeLine{00274\ \ \ \ \ \_\_m512d\ dp\_x\ =\ \_mm512\_cvtepi64\_pd(x);}
+\DoxyCodeLine{00275\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_sqrt\_pd(dp\_x);}
+\DoxyCodeLine{00276\ \ \ \};}
+\DoxyCodeLine{00277\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ abs(\_\_m512i\ x)}
+\DoxyCodeLine{00278\ \ \ \{}
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_abs\_epi64(x);}
+\DoxyCodeLine{00280\ \ \ \};}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00282\ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t}\ Scale\ =\ sizeof(\textcolor{keywordtype}{int}64\_t)>}
+\DoxyCodeLine{00283\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ gather(\textcolor{keyword}{const}\ \_\_m512i\&\ idx,}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}*\ addr)}
+\DoxyCodeLine{00285\ \ \ \{}
+\DoxyCodeLine{00286\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_i64gather\_epi64(idx,\ addr,\ Scale);}
+\DoxyCodeLine{00287\ \ \ \};}
+\DoxyCodeLine{00288\ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t}\ Scale\ =\ sizeof(\textcolor{keywordtype}{int}64\_t)>}
+\DoxyCodeLine{00289\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ pf\_gather(\textcolor{keyword}{const}\ \_\_m512i\&\ idx,}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}*\ addr)}
+\DoxyCodeLine{00291\ \ \ \{}
+\DoxyCodeLine{00292\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_prefetch\_i64gather\_epi64(idx,\ addr,\ Scale,\ 0);}
+\DoxyCodeLine{00293\ \ \ \};}
+\DoxyCodeLine{00294\ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t}\ Scale\ =\ sizeof(\textcolor{keywordtype}{int}64\_t)>}
+\DoxyCodeLine{00295\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ scatter(\textcolor{keyword}{auto}*\ addr,}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512i\&\ idx,}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512i\&\ val)}
+\DoxyCodeLine{00298\ \ \ \{}
+\DoxyCodeLine{00299\ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm512\_i64scatter\_epi64(addr,\ idx,\ val,\ Scale);}
+\DoxyCodeLine{00300\ \ \ \};}
+\DoxyCodeLine{00301\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ separate\_complex(}
+\DoxyCodeLine{00302\ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512i\&\ a,}
+\DoxyCodeLine{00303\ \ \ \ \ \textcolor{keyword}{const}\ \_\_m512i\&\ b)}
+\DoxyCodeLine{00304\ \ \ \{}
+\DoxyCodeLine{00305\ \ \ \ \ \_\_m512i\ real\ =\ \_mm512\_unpacklo\_epi64(a,\ b);}
+\DoxyCodeLine{00306\ \ \ \ \ \_\_m512i\ imag\ =\ \_mm512\_unpackhi\_epi64(a,\ b);}
+\DoxyCodeLine{00307\ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_tuple(real,\ imag);}
+\DoxyCodeLine{00308\ \ \ \};}
+\DoxyCodeLine{00309\ \};}
+\DoxyCodeLine{00310\ }
+\DoxyCodeLine{00311\ \textcolor{comment}{//\ avx\ addition\ actually\ just\ overflows\ like\ desired\ for\ unsigned\ operands}}
+\DoxyCodeLine{00312\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00313\ \textcolor{keyword}{struct\ }intrinsics<uint64\_t>\ :\ intrinsics<int64\_t>}
+\DoxyCodeLine{00314\ \{}
+\DoxyCodeLine{00315\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ abs(\_\_m512i\ x)\ \{\ \textcolor{keywordflow}{return}\ x;\ \};}
+\DoxyCodeLine{00316\ \};}
+\DoxyCodeLine{00317\ }
+\DoxyCodeLine{00318\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00319\ \textcolor{keyword}{struct\ }intrinsics<uint32\_t>\ :\ intrinsics<int32\_t>}
+\DoxyCodeLine{00320\ \{}
+\DoxyCodeLine{00321\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_attribute((always\_inline))\ \textcolor{keyword}{auto}\ abs(\_\_m512i\ x)\ \{\ \textcolor{keywordflow}{return}\ x;\ \};}
+\DoxyCodeLine{00322\ \};}
+\DoxyCodeLine{00323\ }
+\DoxyCodeLine{00324\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00326\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ INTRINSICS\_HEADER}}
+
+\end{DoxyCode}

@@ -1,0 +1,52 @@
+\doxysection{include/\+Matrix.hpp File Reference}
+\hypertarget{Matrix_8hpp}{}\label{Matrix_8hpp}\index{include/Matrix.hpp@{include/Matrix.hpp}}
+
+
+Provides a sparse Matrix and Matrix\+Variant with dynamic value type.  
+
+
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include "{}Canonical\+Types.\+hpp"{}}\newline
+{\ttfamily \#include "{}Matrix\+Traits.\+hpp"{}}\newline
+{\ttfamily \#include "{}Threaded\+Accumulator.\+hpp"{}}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$execution$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$numeric$>$}\newline
+{\ttfamily \#include $<$omp.\+h$>$}\newline
+{\ttfamily \#include $<$ranges$>$}\newline
+{\ttfamily \#include $<$span$>$}\newline
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+{\ttfamily \#include $<$variant$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classalgebra_1_1Matrix}{algebra\+::\+Matrix$<$ T, O, I $>$}}
+\begin{DoxyCompactList}\small\item\em Represents a sparse mathematical matrix. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classalgebra_1_1MatrixVariant}{algebra\+::\+Matrix\+Variant$<$ O $>$}}
+\begin{DoxyCompactList}\small\item\em Represents a \doxylink{classalgebra_1_1Matrix}{Matrix} with unknown element type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacealgebra}{algebra}}
+\begin{DoxyCompactList}\small\item\em Namespace for \doxylink{classalgebra_1_1Matrix}{Matrix} operations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{conceptalgebra_1_1_0d150302374311131314203277166032044041071017176144_1_1is__eight__byte}{algebra\+::@150302374311131314203277166032044041071017176144\+::is\+\_\+eight\+\_\+byte}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O$>$ }\\using \mbox{\hyperlink{namespacealgebra_a20bcabbcebdafa332a8cdc3109929be6}{algebra\+::\+\_\+\+Matrix\+Variant\+Base}}
+\begin{DoxyCompactList}\small\item\em The base class for a matrix with dynamic element type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides a sparse Matrix and Matrix\+Variant with dynamic value type. 
+

@@ -1,0 +1,48 @@
+\doxysection{canonical\+\_\+t\texorpdfstring{$<$}{<} unsigned int \texorpdfstring{$>$}{>} Struct Reference}
+\hypertarget{structcanonical__t_3_01unsigned_01int_01_4}{}\label{structcanonical__t_3_01unsigned_01int_01_4}\index{canonical\_t$<$ unsigned int $>$@{canonical\_t$<$ unsigned int $>$}}
+
+
+See documentation for \doxylink{structcanonical__t_3_01int_01_4}{canonical\+\_\+t$<$int$>$}  
+
+
+
+
+{\ttfamily \#include $<$Canonical\+Types.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{structcanonical__t_3_01unsigned_01int_01_4_a238fc07fd9364c6a51c6514ced1628f9}{type}}
+\begin{DoxyCompactList}\small\item\em The fixed size type. \end{DoxyCompactList}\item 
+\Hypertarget{structcanonical__t_a38199d9a3064e25734ff6eb4617ab2b1}\label{structcanonical__t_a38199d9a3064e25734ff6eb4617ab2b1} 
+using {\bfseries type}
+\begin{DoxyCompactList}\small\item\em the same type as the input \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+See documentation for \doxylink{structcanonical__t_3_01int_01_4}{canonical\+\_\+t$<$int$>$} 
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{structcanonical__t_3_01unsigned_01int_01_4_a238fc07fd9364c6a51c6514ced1628f9}\index{canonical\_t$<$ unsigned int $>$@{canonical\_t$<$ unsigned int $>$}!type@{type}}
+\index{type@{type}!canonical\_t$<$ unsigned int $>$@{canonical\_t$<$ unsigned int $>$}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily \label{structcanonical__t_3_01unsigned_01int_01_4_a238fc07fd9364c6a51c6514ced1628f9} 
+using \mbox{\hyperlink{structcanonical__t}{canonical\+\_\+t}}$<$ unsigned int $>$\mbox{\hyperlink{structcanonical__t}{\+::type}}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ std::conditional\_t<}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ int)\ ==\ 2,}
+\DoxyCodeLine{\ \ \ \ uint16\_t,}
+\DoxyCodeLine{\ \ \ \ std::conditional\_t<\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int})\ ==\ 4,\ uint32\_t,\ uint64\_t>>}
+
+\end{DoxyCode}
+
+
+The fixed size type. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{CanonicalTypes_8hpp}{Canonical\+Types.\+hpp}}\end{DoxyCompactItemize}

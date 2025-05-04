@@ -1,0 +1,22 @@
+\doxysection{Matrix\+Traits\+::Is\+Row\+Major Concept Reference}
+\hypertarget{conceptMatrixTraits_1_1IsRowMajor}{}\label{conceptMatrixTraits_1_1IsRowMajor}\index{MatrixTraits::IsRowMajor@{MatrixTraits::IsRowMajor}}
+
+
+Restricts the storage order to only row-\/major form.  
+
+
+
+
+{\ttfamily \#include $<$Matrix\+Traits.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<StorageOrder\ O>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptMatrixTraits_1_1IsRowMajor}{MatrixTraits::IsRowMajor}}\ =\ \ (O\ ==\ \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32aa46531966d2fd2a0d92304d9212e44f4}{StorageOrder::ROWMAJOR}})}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Restricts the storage order to only row-\/major form. 

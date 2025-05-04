@@ -1,0 +1,177 @@
+\chapter{Sparse Matrix Library}
+\hypertarget{md_README}{}\label{md_README}\index{Sparse Matrix Library@{Sparse Matrix Library}}
+\label{md_README_autotoc_md0}%
+\Hypertarget{md_README_autotoc_md0}%
+
+
+This project implements a {\bfseries{sparse matrix library}} in C++, designed to handle both {\bfseries{dynamic (uncompressed)}} and {\bfseries{compressed}} storage formats. It supports matrix-\/vector multiplication, conversion between storage formats, norm calculations, and reading matrices from \href{https://math.nist.gov/MatrixMarket/}{\texttt{ Matrix Market}} files.
+
+This project was developed as part of the Challenge 2 assignment for the 2024–2025 Advanced Programming for Scientific Computing Course at Politecnico di Milano.
+
+\DoxyHorRuler{0}
+ \hypertarget{md_README_autotoc_md2}{}\doxysection{\texorpdfstring{Functionality}{Functionality}}\label{md_README_autotoc_md2}
+
+\begin{DoxyItemize}
+\item {\bfseries{Templated Sparse Matrix Class}}\+: {\ttfamily Matrix\texorpdfstring{$<$}{<}T, Storage\+Order\texorpdfstring{$>$}{>}} supports both {\ttfamily row-\/major} and {\ttfamily column-\/major} layouts. It stores data in either {\bfseries{compressed}} or {\bfseries{dynamic (uncompressed)}}.
+\item {\bfseries{Uncompressed (Dynamic) Format}}\+: Backed by a {\ttfamily std\+::map}, this format allows random insertions, deletions, and element modifications.
+\item {\bfseries{Compressed Format}}\+: Uses {\bfseries{CSR (Compressed Sparse Row)}} for row-\/major matrices and {\bfseries{CSC (Compressed Sparse Column)}} for column-\/major ones. This format provides efficient iteration and matrix-\/vector multiplication.
+\item {\bfseries{Automatic Format Detection}}\+: You can check if a matrix is compressed using {\ttfamily .is\+\_\+compressed()} and convert formats using {\ttfamily .compress()} or {\ttfamily .uncompress()}.
+\item {\bfseries{Efficient Matrix-\/\+Vector Multiplication}}\+: Supports multiplication with both {\ttfamily std\+::vector\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>}} and {\ttfamily Matrix\texorpdfstring{$<$}{<}T, Storage\+Order\texorpdfstring{$>$}{>}} objects interpreted as column vectors. Optimized paths for both compressed and uncompressed formats.
+\item {\bfseries{Matrix Norms}}\+: Implements {\ttfamily L1}, {\ttfamily L∞}, and Frobenius norms via {\ttfamily norm\texorpdfstring{$<$}{<}N\texorpdfstring{$>$}{>}()}, with optional parallelism. Norms are computed differently depending on compression format for best performance.
+\item {\bfseries{Support for Scalar and Complex Types}}\+: Template-\/based design allows storage of real, complex, and integer values.
+\item {\bfseries{Matrix\+Market Reader}}\+: Load {\ttfamily .mtx} files using {\ttfamily matrix\+\_\+market\+\_\+read(...)} — supports general real and complex matrices.
+\item {\bfseries{Architecture-\/\+Specific Optimization}}\+: If AVX512 compatibility is detected on the build architecture, custom SIMD kernels are used to speed up norm computation in specific cases where automatic vectorisation is difficult.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_README_autotoc_md4}{}\doxysection{\texorpdfstring{Build Instructions}{Build Instructions}}\label{md_README_autotoc_md4}
+
+\begin{DoxyEnumerate}
+\item Clone the repository\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git\ clone\ git@github.com:PACS-\/24-\/25/challenge2-\/barabadabastu.git}
+\DoxyCodeLine{cd\ challenge2-\/barabadabastu}
+
+\end{DoxyCode}
+
+\item Build the project using {\ttfamily make}\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{make}
+
+\end{DoxyCode}
+
+
+This will compile the source files and generate the executable {\ttfamily bin/main} using the {\bfseries{release}} configuration.
+\end{DoxyEnumerate}
+
+\DoxyHorRuler{0}
+\hypertarget{md_README_autotoc_md6}{}\doxysubsection{\texorpdfstring{Compilation}{Compilation}}\label{md_README_autotoc_md6}
+This project uses a {\bfseries{Makefile}} to simplify compilation and support different build modes.
+
+The following targets are defined by the Makefile\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Mode   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Command   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description    }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Mode   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Command   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description    }\\\cline{1-3}
+\endhead
+{\bfseries{release}}   &{\ttfamily make} or {\ttfamily make release}   &Builds optimized code using {\ttfamily -\/Ofast}, {\bfseries{without warnings}}. Use this for running benchmarks or production.    \\\cline{1-3}
+{\bfseries{debug}}   &{\ttfamily make debug}   &Builds with {\bfseries{no optimization}}, full warnings, and debug symbols. Use this to debug code.    \\\cline{1-3}
+{\bfseries{profile}}   &{\ttfamily make profile}   &Builds with {\bfseries{optimization and debug symbols}}. Use this to analyze performance (e.\+g. with {\ttfamily gprof}, {\ttfamily perf}, or {\ttfamily valgrind}).    \\\cline{1-3}
+{\bfseries{doc}}   &{\ttfamily make doc}   &Builds the project documentation using \href{https://www.doxygen.nl/}{\texttt{ Doxygen}}.    \\\cline{1-3}
+{\bfseries{clean}}   &{\ttfamily make clean}   &Removes the existing compiled objects and generated dependency files    \\\cline{1-3}
+{\bfseries{distclean}}   &{\ttfamily make distclean}   &Similar to {\ttfamily clean}, but also removes the main executable, backup files and temporary files   \\\cline{1-3}
+\end{longtabu}
+
+
+The build modes for compiling the executable {\bfseries{do not automatically clean}} previously compiled files. Be sure to run {\ttfamily make clean} or {\ttfamily make disctlean} before changing build configuration between {\ttfamily release}, {\ttfamily debug} and {\ttfamily profile}.
+
+\DoxyHorRuler{0}
+\hypertarget{md_README_autotoc_md8}{}\doxysubsection{\texorpdfstring{Running the Program}{Running the Program}}\label{md_README_autotoc_md8}
+After compilation, you can run the test program using\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{./bin/main\ -\/-\/dtype=double\ -\/-\/test-\/matrix=path/to/matrix.mtx}
+
+\end{DoxyCode}
+
+
+For more on how to use and run the program, see the Example Usage section below.
+
+\DoxyHorRuler{0}
+\hypertarget{md_README_autotoc_md10}{}\doxysubsection{\texorpdfstring{Requirements}{Requirements}}\label{md_README_autotoc_md10}
+
+\begin{DoxyItemize}
+\item A C++20-\/compliant compiler (e.\+g. {\ttfamily g++ 10} or later, {\ttfamily clang++ 12} or later)
+\item {\ttfamily make}
+\item Open\+MP support for multithreading
+\item \href{https://getpot.sourceforge.net}{\texttt{ Get\+Pot}} (automatically included via {\ttfamily -\/I} if you set {\ttfamily PACS\+\_\+\+ROOT})
+\item Linux or Unix-\/like environment (WSL works on Windows)
+\item \href{https://www.intel.com/content/www/us/en/developer/tools/oneapi/onetbb.html}{\texttt{ Intel Threading Building Blocks}}
+\item Optional\+:
+\begin{DoxyItemize}
+\item Doxygen for building the documentation
+\item {\ttfamily curl} and {\ttfamily gzip} for automatically downloading a set of sample matrices
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+If you are working in the PACS course environment, the {\ttfamily PACS\+\_\+\+ROOT} variable is automatically set. If not, you can set it manually before building\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{export\ PACS\_ROOT=/path/to/pacs-\/resources}
+\DoxyCodeLine{make}
+
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md_README_autotoc_md12}{}\doxysection{\texorpdfstring{Obtaining example Matrix\+Market files}{Obtaining example Matrix\+Market files}}\label{md_README_autotoc_md12}
+The project includes a shell script helper {\ttfamily download\+\_\+test\+\_\+matrices.\+sh} fow downloading Matrix Market files. The downloaded matrices will be placed in a {\ttfamily \$PWD/data} directory as uncompressed .mtx files.
+
+\DoxyHorRuler{0}
+\hypertarget{md_README_autotoc_md14}{}\doxysection{\texorpdfstring{Running the Test Suite}{Running the Test Suite}}\label{md_README_autotoc_md14}
+To run the test program, you should provide {\bfseries{two required parameters}}\+:
+
+
+\begin{DoxyEnumerate}
+\item {\ttfamily -\/-\/test-\/matrix=\texorpdfstring{$<$}{<}path\texorpdfstring{$>$}{>}} Path to a {\ttfamily .mtx} file in \href{https://math.nist.gov/MatrixMarket/}{\texttt{ Matrix\+Market}} format. If this parameter is not specified, the test program tries to read a matrix stored in {\ttfamily data/lnsp\+\_\+131.\+mtx}.
+\item {\ttfamily -\/-\/dtype=\texorpdfstring{$<$}{<}type\texorpdfstring{$>$}{>}} Data type of the matrix elements. Supported types are\+: {\ttfamily double}, {\ttfamily float}, {\ttfamily complex-\/double}, {\ttfamily complex-\/float}, {\ttfamily int32}, {\ttfamily int64}. By default, the matrix is created with {\ttfamily double} elements. The string {\ttfamily complex} can be used as a shorthand for {\ttfamily complex-\/double}.
+\end{DoxyEnumerate}
+
+⚠️ It is the user\textquotesingle{}s responsibility to supply the test matrix path and datatype correctly when launching the program. The data-\/type needs to be compatible with the data-\/type of the provided matrix.
+
+\DoxyHorRuler{0}
+\hypertarget{md_README_autotoc_md16}{}\doxysubsection{\texorpdfstring{Example Usage}{Example Usage}}\label{md_README_autotoc_md16}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{./main\ -\/-\/test-\/matrix=data/lnsp\_131.mtx\ -\/-\/dtype=complex}
+
+\end{DoxyCode}
+
+
+The test routine will\+:
+\begin{DoxyItemize}
+\item Load the matrix into both row-\/major and column-\/major representations
+\item Apply matrix-\/vector multiplication in both compressed and uncompressed formats
+\item Measure and compare matrix norms using both sequential and parallel execution
+\item Test insertions and dynamic resizing capabilities in uncompressed mode
+\item Evaluate the performance of compression and decompression
+\item Time each operation
+\item Print results
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_README_autotoc_md18}{}\doxysection{\texorpdfstring{Project Structure}{Project Structure}}\label{md_README_autotoc_md18}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{.}
+\DoxyCodeLine{├──\ include/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Header\ files}
+\DoxyCodeLine{│\ \ \ ├──\ CanonicalTypes.hpp}
+\DoxyCodeLine{│\ \ \ ├──\ Matrix.hpp}
+\DoxyCodeLine{│\ \ \ ├──\ MatrixIntrinsics.hpp}
+\DoxyCodeLine{│\ \ \ ├──\ MatrixTraits.hpp}
+\DoxyCodeLine{│\ \ \ ├──\ matrix\_reader.hpp}
+\DoxyCodeLine{│\ \ \ ├──\ tests.hpp}
+\DoxyCodeLine{│\ \ \ └──\ ThreadedAccumulator.hpp}
+\DoxyCodeLine{├──\ src/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Source\ files}
+\DoxyCodeLine{│\ \ \ ├──\ main.cpp}
+\DoxyCodeLine{│\ \ \ └──\ ThreadedAccumulator.cpp}
+\DoxyCodeLine{├──\ .github/,\ .vscode/\ \ \ \ \ \ \ \ \ \ \ \ \#\ GitHub\ and\ VS\ Code\ config\ directories}
+\DoxyCodeLine{├──\ Challenge24-\/25-\/2.pdf\ \ \ \ \ \ \ \ \ \ \#\ Assignment\ description}
+\DoxyCodeLine{├──\ download\_test\_matrices.sh\ \ \ \ \ \#\ helper\ script\ to\ download\ example\ matrices}
+\DoxyCodeLine{├──\ Doxyfile\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Doxygen\ configuration}
+\DoxyCodeLine{├──\ LICENSE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Project\ license}
+\DoxyCodeLine{├──\ Makefile\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Build\ system}
+\DoxyCodeLine{└──\ README.md\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Project\ documentation}
+
+\end{DoxyCode}
+ 

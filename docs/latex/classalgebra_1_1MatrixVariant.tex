@@ -1,0 +1,60 @@
+\doxysection{algebra\+::Matrix\+Variant\texorpdfstring{$<$}{<} O \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classalgebra_1_1MatrixVariant}{}\label{classalgebra_1_1MatrixVariant}\index{algebra::MatrixVariant$<$ O $>$@{algebra::MatrixVariant$<$ O $>$}}
+
+
+Represents a \doxylink{classalgebra_1_1Matrix}{Matrix} with unknown element type.  
+
+
+
+
+{\ttfamily \#include $<$Matrix.\+hpp$>$}
+
+Inheritance diagram for algebra\+::Matrix\+Variant\texorpdfstring{$<$}{<} O \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classalgebra_1_1MatrixVariant}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classalgebra_1_1MatrixVariant_a995ad4875976397cf01e6a28a41edba0}{type\+\_\+from\+\_\+string}} (std\+::string\+\_\+view dtype)
+\begin{DoxyCompactList}\small\item\em Emplaces an empty matrix with dynamically specified type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$\mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O$>$\newline
+class algebra\+::\+Matrix\+Variant$<$ O $>$}
+Represents a \doxylink{classalgebra_1_1Matrix}{Matrix} with unknown element type. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em O} & The storage order for the variant \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classalgebra_1_1MatrixVariant_a995ad4875976397cf01e6a28a41edba0}\index{algebra::MatrixVariant$<$ O $>$@{algebra::MatrixVariant$<$ O $>$}!type\_from\_string@{type\_from\_string}}
+\index{type\_from\_string@{type\_from\_string}!algebra::MatrixVariant$<$ O $>$@{algebra::MatrixVariant$<$ O $>$}}
+\doxysubsubsection{\texorpdfstring{type\_from\_string()}{type\_from\_string()}}
+{\footnotesize\ttfamily \label{classalgebra_1_1MatrixVariant_a995ad4875976397cf01e6a28a41edba0} 
+template$<$\mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O$>$ \\
+void \mbox{\hyperlink{classalgebra_1_1MatrixVariant}{algebra\+::\+Matrix\+Variant}}$<$ O $>$\+::type\+\_\+from\+\_\+string (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{dtype}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Emplaces an empty matrix with dynamically specified type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dtype} & A string representation of the desired type of matrix elements
+
+Should be one of\+: "{}double"{} for double precision floating point values "{}float"{} for single precision floating point values "{}complex"{} for double precision complex values "{}complex-\/double"{} alias for complex "{}complex-\/float"{} for single precision complex values "{}int32"{} for 32-\/bit signed integral values "{}int64"{} for 64-\/bit signed integral values \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{Matrix_8hpp}{Matrix.\+hpp}}\end{DoxyCompactItemize}

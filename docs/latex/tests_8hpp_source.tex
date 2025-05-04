@@ -1,0 +1,243 @@
+\doxysection{tests.\+hpp}
+\hypertarget{tests_8hpp_source}{}\label{tests_8hpp_source}\index{include/tests.hpp@{include/tests.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ TESTS\_HEADER}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ TESTS\_HEADER}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{MatrixTraits_8hpp}{MatrixTraits.hpp}}"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }MatrixTests\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Func>}
+\DoxyCodeLine{00017\ \textcolor{keyword}{auto}}
+\DoxyCodeLine{00018\ timed\_test(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ Func\&\&\ func)}
+\DoxyCodeLine{00019\ \{}
+\DoxyCodeLine{00020\ \ \ \textcolor{keyword}{using\ }clock\ =\ std::chrono::high\_resolution\_clock;}
+\DoxyCodeLine{00021\ \ \ \textcolor{keyword}{auto}\ start\ =\ clock::now();}
+\DoxyCodeLine{00022\ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_void\_v<\textcolor{keyword}{decltype}(func())>)\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ func();}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{auto}\ end\ =\ clock::now();}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{auto}\ duration\ =}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ std::chrono::duration<double,\ std::milli>(end\ -\/\ start).count();}
+\DoxyCodeLine{00027\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)t\ -\/\ "{}}\ <<\ name\ <<\ \textcolor{stringliteral}{"{}\ completed\ in\ "{}}\ <<\ std::fixed}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setprecision(1)\ <<\ duration\ <<\ \textcolor{stringliteral}{"{}\ ms\(\backslash\)n"{}};}
+\DoxyCodeLine{00029\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{auto}\ result\ =\ func();}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{auto}\ end\ =\ clock::now();}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{auto}\ duration\ =}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ std::chrono::duration<double,\ std::milli>(end\ -\/\ start).count();}
+\DoxyCodeLine{00034\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)t\ \ -\/\ "{}}\ <<\ name\ <<\ \textcolor{stringliteral}{"{}\ completed\ in\ "{}}\ <<\ std::fixed}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setprecision(1)\ <<\ duration\ <<\ \textcolor{stringliteral}{"{}\ ms\(\backslash\)n"{}};}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00037\ \ \ \}}
+\DoxyCodeLine{00038\ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00041\ test\_insert(\textcolor{keyword}{auto}\ M)}
+\DoxyCodeLine{00042\ \{}
+\DoxyCodeLine{00043\ \ \ \textcolor{keyword}{auto}\ n\ =\ M.rows();}
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{auto}\ m\ =\ M.cols();}
+\DoxyCodeLine{00045\ \ \ assert(n\ >\ 0\ \&\&\ m\ >\ 0);}
+\DoxyCodeLine{00046\ \ \ \textcolor{keyword}{auto}\&\ a\ =\ M(0,\ 0);}
+\DoxyCodeLine{00047\ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ ac\ =\ M(0,\ 0);}
+\DoxyCodeLine{00048\ \ \ \textcolor{keyword}{auto}\ b\ =\ M(n\ -\/\ 1,\ m\ -\/\ 1);}
+\DoxyCodeLine{00049\ \ \ a\ =\ b;}
+\DoxyCodeLine{00050\ \ \ assert(ac\ ==\ b);\ \textcolor{comment}{//\ change\ propagates\ to\ the\ const\ reference}}
+\DoxyCodeLine{00051\ \};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00054\ test\_resize(\textcolor{keyword}{auto}\ m)}
+\DoxyCodeLine{00055\ \{}
+\DoxyCodeLine{00056\ \ \ \textcolor{keyword}{using\ }index\_t\ =\ std::remove\_reference\_t<\textcolor{keyword}{decltype}(m)>::index\_t;}
+\DoxyCodeLine{00057\ \ \ index\_t\ newn\ =\ 1000,\ newm\ =\ 10000;}
+\DoxyCodeLine{00058\ \ \ assert(!m.is\_compressed());}
+\DoxyCodeLine{00059\ \ \ \textcolor{keyword}{auto}\ n\_orig\ =\ m.rows();}
+\DoxyCodeLine{00060\ \ \ \textcolor{keyword}{auto}\ m\_orig\ =\ m.cols();}
+\DoxyCodeLine{00061\ \ \ m.resize(newn,\ newm);}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ assert((n\_orig\ !=\ newn)\ ||\ (m\_orig\ !=\ newm));}
+\DoxyCodeLine{00064\ \ \ assert(m.rows()\ ==\ newn\ \&\&\ m.cols()\ ==\ newm);}
+\DoxyCodeLine{00065\ \ \ m.resize(n\_orig,\ m\_orig);}
+\DoxyCodeLine{00066\ \};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00069\ test\_extract\_dynamic(\textcolor{keyword}{auto}\ M)}
+\DoxyCodeLine{00070\ \{}
+\DoxyCodeLine{00071\ \ \ \textcolor{keyword}{using\ }index\_t\ =\ std::remove\_reference\_t<\textcolor{keyword}{decltype}(M)>::index\_t;}
+\DoxyCodeLine{00072\ \ \ assert(!M.is\_compressed());}
+\DoxyCodeLine{00073\ \ \ index\_t\ n\ =\ M.rows();}
+\DoxyCodeLine{00074\ \ \ index\_t\ m\ =\ M.cols();}
+\DoxyCodeLine{00075\ \ \ assert(n\ >\ 0\ \&\&\ m\ >\ 0);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ index\_t\ outer\_size\ =}
+\DoxyCodeLine{00078\ \ \ \ \ MatrixTraits::IsRowMajor<M.storage\_order>\ ?\ M.rows()\ :\ M.cols();}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \textcolor{keywordflow}{for}\ (index\_t\ i\ =\ 0;\ i\ <\ outer\_size;\ ++i)\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{auto}\ range\ =\ M(i);}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ j\ :\ range)\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ assert(std::norm(j.second));}
+\DoxyCodeLine{00084\ \ \ \ \ \}}
+\DoxyCodeLine{00085\ \ \ \}}
+\DoxyCodeLine{00086\ \};}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00089\ test\_extract\_compressed(\textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ M)}
+\DoxyCodeLine{00090\ \{}
+\DoxyCodeLine{00091\ \ \ \textcolor{keyword}{using\ }index\_t\ =\ std::remove\_reference\_t<\textcolor{keyword}{decltype}(M)>::index\_t;}
+\DoxyCodeLine{00092\ \ \ assert(M.is\_compressed());}
+\DoxyCodeLine{00093\ \ \ assert(M.rows()\ >\ 0\ \&\&\ M.cols()\ >\ 0);}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ index\_t\ outer\_size\ =}
+\DoxyCodeLine{00096\ \ \ \ \ MatrixTraits::IsRowMajor<M.storage\_order>\ ?\ M.rows()\ :\ M.cols();}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \textcolor{keywordflow}{for}\ (index\_t\ i\ =\ 0;\ i\ <\ outer\_size;\ ++i)\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{auto}\ range\ =\ M[i];}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ j\ :\ range)\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ assert(std::norm(j));}
+\DoxyCodeLine{00102\ \ \ \ \ \}}
+\DoxyCodeLine{00103\ \ \ \}}
+\DoxyCodeLine{00104\ \};}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00107\ test\_access(\textcolor{keyword}{auto}\ M)}
+\DoxyCodeLine{00108\ \{}
+\DoxyCodeLine{00109\ \ \ \textcolor{keyword}{using\ }index\_t\ =\ std::remove\_reference\_t<\textcolor{keyword}{decltype}(M)>::index\_t;}
+\DoxyCodeLine{00110\ \ \ \textcolor{keyword}{using\ }value\_t\ =\ \textcolor{keyword}{typename}\ std::remove\_cvref\_t<\textcolor{keyword}{decltype}(M)>::value\_type;}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ index\_t\ n\ =\ M.rows();}
+\DoxyCodeLine{00113\ \ \ index\_t\ m\ =\ M.cols();}
+\DoxyCodeLine{00114\ \ \ assert(n\ >\ 0\ \&\&\ m\ >\ 0);}
+\DoxyCodeLine{00115\ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ const\_M\ =\ M;\ \textcolor{comment}{//\ Without\ this\ the\ return\ type\ of\ operator()\ doesn't}}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ actually\ affect\ which\ branch\ in\ access()\ is\ called}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ since\ that\ uses\ is\_const\_v(Self)\ and\ doesn't\ know}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ anything\ about\ the\ return\ type}}
+\DoxyCodeLine{00119\ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ ac\ =\ const\_M(0,\ 0);}
+\DoxyCodeLine{00120\ \ \ \textcolor{keyword}{static\_assert}(std::is\_same\_v<\textcolor{keyword}{decltype}(ac),\ value\_t\ \textcolor{keyword}{const}\&>);}
+\DoxyCodeLine{00121\ \ \ \textcolor{keyword}{auto}\ b\ =\ const\_M(n\ -\/\ 1,\ m\ -\/\ 1);}
+\DoxyCodeLine{00122\ \ \ \textcolor{keyword}{static\_assert}(std::is\_same\_v<\textcolor{keyword}{decltype}(b),\ value\_t>);}
+\DoxyCodeLine{00123\ \ \ \textcolor{keywordflow}{if}\ (!M.is\_compressed())\ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{auto}\&\ r\ =\ M(n\ -\/\ 1,\ m\ -\/\ 1);}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_same\_v<\textcolor{keyword}{decltype}(r),\ value\_t\&>);}
+\DoxyCodeLine{00126\ \ \ \}}
+\DoxyCodeLine{00127\ \};}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00130\ test\_mul(\textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ m)}
+\DoxyCodeLine{00131\ \{}
+\DoxyCodeLine{00132\ \ \ \textcolor{keyword}{using\ }value\_t\ =\ \textcolor{keyword}{typename}\ std::remove\_cvref\_t<\textcolor{keyword}{decltype}(m)>::value\_type;}
+\DoxyCodeLine{00133\ \ \ \textcolor{keyword}{auto}\ x\ =\ std::vector<value\_t>(m.cols(),\ \textcolor{keyword}{static\_cast<}value\_t\textcolor{keyword}{>}(1.0));}
+\DoxyCodeLine{00134\ \ \ \textcolor{keyword}{auto}\ b\ =\ m\ *\ x;}
+\DoxyCodeLine{00135\ \ \ assert(b.size()\ ==\ m.rows());}
+\DoxyCodeLine{00136\ \};}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00139\ test\_norm(\textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ m)}
+\DoxyCodeLine{00140\ \{}
+\DoxyCodeLine{00141\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)t"{}}\ <<\ \textcolor{stringliteral}{"{}>\ Sequential\ norm\ calculations:"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00142\ \ \ \textcolor{keyword}{auto}\ l1\ =\ timed\_test(\textcolor{stringliteral}{"{}L1\ norm"{}},\ [\&]()\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordflow}{return}\ m.template\ norm<\mbox{\hyperlink{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75a06c2cea18679d64399783748fa367bdd}{MatrixTraits::Norm::One}},}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5aa7e82daa7280af25afbaa076ac16eb1e}{MatrixTraits::execution::Mode::Sequential}}>();}
+\DoxyCodeLine{00145\ \ \ \});}
+\DoxyCodeLine{00146\ \ \ \textcolor{keyword}{auto}\ lf\ =\ timed\_test(\textcolor{stringliteral}{"{}Frobenius\ norm"{}},\ [\&]()\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordflow}{return}\ m.template\ norm<MatrixTraits::Norm::Frobenius,}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5aa7e82daa7280af25afbaa076ac16eb1e}{MatrixTraits::execution::Mode::Sequential}}>();}
+\DoxyCodeLine{00149\ \ \ \});}
+\DoxyCodeLine{00150\ \ \ \textcolor{keyword}{auto}\ linf\ =\ timed\_test(\textcolor{stringliteral}{"{}Infinity\ norm"{}},\ [\&]()\ \{}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{return}\ m.template\ norm<MatrixTraits::Norm::Infinity,}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5aa7e82daa7280af25afbaa076ac16eb1e}{MatrixTraits::execution::Mode::Sequential}}>();}
+\DoxyCodeLine{00153\ \ \ \});}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)t"{}}\ <<\ \textcolor{stringliteral}{"{}>\ Parallel\ norm\ calculations:"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00156\ \ \ \textcolor{keyword}{auto}\ l1\_par\ =\ timed\_test(\textcolor{stringliteral}{"{}L1\ norm"{}},\ [\&]()\ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordflow}{return}\ m.template\ norm<\mbox{\hyperlink{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75a06c2cea18679d64399783748fa367bdd}{MatrixTraits::Norm::One}},}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5a98402eecfbcefc336954458a01752131}{MatrixTraits::execution::Mode::Parallel}}>();}
+\DoxyCodeLine{00159\ \ \ \});}
+\DoxyCodeLine{00160\ \ \ \textcolor{keyword}{auto}\ lf\_par\ =\ timed\_test(\textcolor{stringliteral}{"{}Frobenius\ norm"{}},\ [\&]()\ \{}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordflow}{return}\ m.template\ norm<MatrixTraits::Norm::Frobenius,}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5a98402eecfbcefc336954458a01752131}{MatrixTraits::execution::Mode::Parallel}}>();}
+\DoxyCodeLine{00163\ \ \ \});}
+\DoxyCodeLine{00164\ \ \ \textcolor{keyword}{auto}\ linf\_par\ =\ timed\_test(\textcolor{stringliteral}{"{}Infinity\ norm"{}},\ [\&]()\ \{}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordflow}{return}\ m.template\ norm<MatrixTraits::Norm::Infinity,}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5a98402eecfbcefc336954458a01752131}{MatrixTraits::execution::Mode::Parallel}}>();}
+\DoxyCodeLine{00167\ \ \ \});}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \ \textcolor{keyword}{auto}\ l1\_relerr\ =}
+\DoxyCodeLine{00170\ \ \ \ \ std::abs(l1\ -\/\ l1\_par)\ /}
+\DoxyCodeLine{00171\ \ \ \ \ (std::numeric\_limits<\textcolor{keyword}{decltype}(l1)>::epsilon()\ *\ std::max(l1,\ l1\_par));}
+\DoxyCodeLine{00172\ \ \ \textcolor{keyword}{auto}\ linf\_relerr\ =}
+\DoxyCodeLine{00173\ \ \ \ \ std::abs(linf\ -\/\ linf\_par)\ /}
+\DoxyCodeLine{00174\ \ \ \ \ (std::numeric\_limits<\textcolor{keyword}{decltype}(linf)>::epsilon()\ *\ std::max(linf,\ linf\_par));}
+\DoxyCodeLine{00175\ \ \ \textcolor{keyword}{auto}\ lf\_relerr\ =}
+\DoxyCodeLine{00176\ \ \ \ \ std::abs(lf\ -\/\ lf\_par)\ /}
+\DoxyCodeLine{00177\ \ \ \ \ (std::numeric\_limits<\textcolor{keyword}{decltype}(lf)>::epsilon()\ *\ std::max(lf,\ lf\_par));}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)t"{}}\ <<\ \textcolor{stringliteral}{"{}Matrix\ norms:\(\backslash\)n"{}};}
+\DoxyCodeLine{00180\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ <<\ \textcolor{stringliteral}{"{}\ \ L1\ \ \ \ \ \ \ \ :\ "{}}\ <<\ l1\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00181\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ <<\ \textcolor{stringliteral}{"{}\ \ Infinity\ \ :\ "{}}\ <<\ linf\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00182\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ <<\ \textcolor{stringliteral}{"{}\ \ Frobenius\ :\ "{}}\ <<\ lf\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00183\ \ \ std::cout}
+\DoxyCodeLine{00184\ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)t"{}}}
+\DoxyCodeLine{00185\ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Relative\ norm\ errors\ from\ parallelisation\ (multiples\ of\ epsilon):\(\backslash\)n"{}};}
+\DoxyCodeLine{00186\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ <<\ \textcolor{stringliteral}{"{}\ \ L1\ \ \ \ \ \ \ \ :\ "{}}\ <<\ l1\_relerr\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00187\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ <<\ \textcolor{stringliteral}{"{}\ \ Infinity\ \ :\ "{}}\ <<\ linf\_relerr\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00188\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ <<\ \textcolor{stringliteral}{"{}\ \ Frobenius\ :\ "{}}\ <<\ lf\_relerr\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00189\ \}}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00192\ test\_compression(\textcolor{keyword}{auto}\&\ m)}
+\DoxyCodeLine{00193\ \{}
+\DoxyCodeLine{00194\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ <<\ \textcolor{stringliteral}{"{}>\ Sequential\ compression:"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00195\ \ \ timed\_test(\textcolor{stringliteral}{"{}Sequential\ compress"{}},\ [\&]()\ \{}
+\DoxyCodeLine{00196\ \ \ \ \ m.template\ compress<MatrixTraits::execution::Mode::Sequential>();}
+\DoxyCodeLine{00197\ \ \ \});}
+\DoxyCodeLine{00198\ \ \ assert(m.is\_compressed());}
+\DoxyCodeLine{00199\ \ \ timed\_test(\textcolor{stringliteral}{"{}Uncompress\ after\ seq\ compress"{}},\ [\&]()\ \{\ m.uncompress();\ \});}
+\DoxyCodeLine{00200\ \ \ assert(!m.is\_compressed());}
+\DoxyCodeLine{00201\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ <<\ \textcolor{stringliteral}{"{}>\ Parallel\ compression:"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00202\ \ \ timed\_test(\textcolor{stringliteral}{"{}Parallel\ compress"{}},\ [\&]()\ \{}
+\DoxyCodeLine{00203\ \ \ \ \ m.template\ compress<MatrixTraits::execution::Mode::Parallel>();}
+\DoxyCodeLine{00204\ \ \ \});}
+\DoxyCodeLine{00205\ \ \ assert(m.is\_compressed());}
+\DoxyCodeLine{00206\ \ \ timed\_test(\textcolor{stringliteral}{"{}Uncompress\ after\ par\ compress"{}},\ [\&]()\ \{\ m.uncompress();\ \});}
+\DoxyCodeLine{00207\ \ \ assert(!m.is\_compressed());}
+\DoxyCodeLine{00208\ \}}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00211\ test\_all(\textcolor{keyword}{auto}\&\ m)}
+\DoxyCodeLine{00212\ \{}
+\DoxyCodeLine{00213\ \ \ assert(!m.is\_compressed());}
+\DoxyCodeLine{00214\ }
+\DoxyCodeLine{00215\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\ \ [\ Uncompressed\ tests\ ]"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ \ \ timed\_test(\textcolor{stringliteral}{"{}test\_insert"{}},\ [\&]()\ \{\ test\_insert(m);\ \});}
+\DoxyCodeLine{00218\ \ \ timed\_test(\textcolor{stringliteral}{"{}test\_resize"{}},\ [\&]()\ \{\ test\_resize(m);\ \});}
+\DoxyCodeLine{00219\ \ \ timed\_test(\textcolor{stringliteral}{"{}test\_extract\_dynamic"{}},\ [\&]()\ \{\ test\_extract\_dynamic(m);\ \});}
+\DoxyCodeLine{00220\ \ \ timed\_test(\textcolor{stringliteral}{"{}test\_access\ (dynamic)"{}},\ [\&]()\ \{\ test\_access(m);\ \});}
+\DoxyCodeLine{00221\ \ \ timed\_test(\textcolor{stringliteral}{"{}test\_mul\ (dynamic)"{}},\ [\&]()\ \{\ test\_mul(m);\ \});}
+\DoxyCodeLine{00222\ \ \ test\_norm(m);}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}\ <<\ \textcolor{stringliteral}{"{}\ \ [\ Compression\ ]"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00225\ \ \ test\_compression(m);}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \ \ m.compress();}
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00229\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}\ <<\ \textcolor{stringliteral}{"{}\ \ [\ Compressed\ tests\ ]"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00230\ \ \ timed\_test(\textcolor{stringliteral}{"{}test\_extract\_compressed"{}},\ [\&]()\ \{\ test\_extract\_compressed(m);\ \});}
+\DoxyCodeLine{00231\ \ \ timed\_test(\textcolor{stringliteral}{"{}test\_access\ (compressed)"{}},\ [\&]()\ \{\ test\_access(m);\ \});}
+\DoxyCodeLine{00232\ \ \ timed\_test(\textcolor{stringliteral}{"{}test\_mul\ (compressed)"{}},\ [\&]()\ \{\ test\_mul(m);\ \});}
+\DoxyCodeLine{00233\ \ \ test\_norm(m);}
+\DoxyCodeLine{00234\ \}}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \}}
+\DoxyCodeLine{00237\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TESTS\_HEADER}}
+
+\end{DoxyCode}

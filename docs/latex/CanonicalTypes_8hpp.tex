@@ -1,0 +1,31 @@
+\doxysection{include/\+Canonical\+Types.hpp File Reference}
+\hypertarget{CanonicalTypes_8hpp}{}\label{CanonicalTypes_8hpp}\index{include/CanonicalTypes.hpp@{include/CanonicalTypes.hpp}}
+
+
+Provides explicitly sized arithmetic types for ease of use with AVX.  
+
+
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcanonical__t}{canonical\+\_\+t$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em For unspecialized types, pass through the original type. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcanonical__t_3_01int_01_4}{canonical\+\_\+t$<$ int $>$}}
+\begin{DoxyCompactList}\small\item\em The int type is guaranteed to be at least 16 bits, but maybe more. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcanonical__t_3_01long_01_4}{canonical\+\_\+t$<$ long $>$}}
+\begin{DoxyCompactList}\small\item\em The long type is guaranteed at least 32 bits. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcanonical__t_3_01long_01long_01_4}{canonical\+\_\+t$<$ long long $>$}}
+\begin{DoxyCompactList}\small\item\em The long long type is guaranteed at least 32 bits (+no less than long) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcanonical__t_3_01unsigned_01int_01_4}{canonical\+\_\+t$<$ unsigned int $>$}}
+\begin{DoxyCompactList}\small\item\em See documentation for \doxylink{structcanonical__t_3_01int_01_4}{canonical\+\_\+t$<$int$>$} \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcanonical__t_3_01unsigned_01long_01_4}{canonical\+\_\+t$<$ unsigned long $>$}}
+\begin{DoxyCompactList}\small\item\em See documentation for \doxylink{structcanonical__t_3_01long_01_4}{canonical\+\_\+t$<$long$>$} \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcanonical__t_3_01unsigned_01long_01long_01_4}{canonical\+\_\+t$<$ unsigned long long $>$}}
+\begin{DoxyCompactList}\small\item\em See documentation for \doxylink{structcanonical__t_3_01long_01long_01_4}{canonical\+\_\+t$<$long long$>$} \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides explicitly sized arithmetic types for ease of use with AVX. 
+

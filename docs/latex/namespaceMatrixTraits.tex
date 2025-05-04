@@ -1,0 +1,93 @@
+\doxysection{Matrix\+Traits Namespace Reference}
+\hypertarget{namespaceMatrixTraits}{}\label{namespaceMatrixTraits}\index{MatrixTraits@{MatrixTraits}}
+
+
+Namespace for Matrix traits.  
+
+
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceMatrixTraits_1_1execution}{execution}}
+\begin{DoxyCompactList}\small\item\em Namespace for execution modes of matrix algorithms. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structMatrixTraits_1_1comp__op}{comp\+\_\+op}}
+\begin{DoxyCompactList}\small\item\em Defines the comparison operator for COOmap matrices. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structMatrixTraits_1_1comp__op_3_01T_00_01StorageOrder_1_1COLMAJOR_01_4}{comp\+\_\+op$<$ T, Storage\+Order\+::\+COLMAJOR $>$}}
+\begin{DoxyCompactList}\small\item\em Defines the comparison operator for COOmap matrices. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structMatrixTraits_1_1norm__type}{norm\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Encodes the type returned by std\+::norm$<$\+T$>$ \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structMatrixTraits_1_1norm__type_3_01std_1_1complex_3_01IT_01_4_01_4}{norm\+\_\+type$<$ std\+::complex$<$ IT $>$ $>$}}
+\begin{DoxyCompactList}\small\item\em Encodes the type returned by std\+::norm$<$\+T$>$ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Numeric}}
+\begin{DoxyCompactList}\small\item\em Restricts template types to scalar or complex arithmetic values. \end{DoxyCompactList}\item 
+concept \mbox{\hyperlink{conceptMatrixTraits_1_1IsRowMajor}{Is\+Row\+Major}}
+\begin{DoxyCompactList}\small\item\em Restricts the storage order to only row-\/major form. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Storage\+Order}} \{ \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32aa46531966d2fd2a0d92304d9212e44f4}{ROWMAJOR}}
+, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32af04a3c791aa353b2385ff97d431330fc}{COLMAJOR}}
+ \}
+\begin{DoxyCompactList}\small\item\em Indicates the storage order of a sparse Matrix. \end{DoxyCompactList}\item 
+enum class \mbox{\hyperlink{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75}{Norm}} \{ \mbox{\hyperlink{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75a06c2cea18679d64399783748fa367bdd}{One}}
+, {\bfseries Frobenius}
+, {\bfseries Infinity}
+ \}
+\begin{DoxyCompactList}\small\item\em Types of matrix-\/norms. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespaceMatrixTraits_a4723886514f5d3416da9a0af7c45c362}\label{namespaceMatrixTraits_a4723886514f5d3416da9a0af7c45c362} 
+{\footnotesize template$<$typename T$>$ }\\constexpr bool {\bfseries is\+\_\+complex\+\_\+arithmetic\+\_\+v} (T)
+\begin{DoxyCompactList}\small\item\em Checks if the type of the input is a complex number. \end{DoxyCompactList}\item 
+\Hypertarget{namespaceMatrixTraits_a2eed8e1ae2a6057363b99ad9aa403b2e}\label{namespaceMatrixTraits_a2eed8e1ae2a6057363b99ad9aa403b2e} 
+{\footnotesize template$<$typename IT$>$ }\\constexpr bool {\bfseries is\+\_\+complex\+\_\+arithmetic\+\_\+v} (std\+::complex$<$ IT $>$)
+\begin{DoxyCompactList}\small\item\em Checks if the type of the input is a complex number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Namespace for Matrix traits. 
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75}\index{MatrixTraits@{MatrixTraits}!Norm@{Norm}}
+\index{Norm@{Norm}!MatrixTraits@{MatrixTraits}}
+\doxysubsubsection{\texorpdfstring{Norm}{Norm}}
+{\footnotesize\ttfamily \label{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75} 
+enum class \mbox{\hyperlink{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75}{Matrix\+Traits\+::\+Norm}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Types of matrix-\/norms. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{One@{One}!MatrixTraits@{MatrixTraits}}\index{MatrixTraits@{MatrixTraits}!One@{One}}}\Hypertarget{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75a06c2cea18679d64399783748fa367bdd}\label{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75a06c2cea18679d64399783748fa367bdd} 
+One&The $L^1$ matrix-\/norm. \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}\index{MatrixTraits@{MatrixTraits}!StorageOrder@{StorageOrder}}
+\index{StorageOrder@{StorageOrder}!MatrixTraits@{MatrixTraits}}
+\doxysubsubsection{\texorpdfstring{StorageOrder}{StorageOrder}}
+{\footnotesize\ttfamily \label{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32} 
+enum class \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Indicates the storage order of a sparse Matrix. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ROWMAJOR@{ROWMAJOR}!MatrixTraits@{MatrixTraits}}\index{MatrixTraits@{MatrixTraits}!ROWMAJOR@{ROWMAJOR}}}\Hypertarget{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32aa46531966d2fd2a0d92304d9212e44f4}\label{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32aa46531966d2fd2a0d92304d9212e44f4} 
+ROWMAJOR&Indicates the values are naturally iterable by row. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{COLMAJOR@{COLMAJOR}!MatrixTraits@{MatrixTraits}}\index{MatrixTraits@{MatrixTraits}!COLMAJOR@{COLMAJOR}}}\Hypertarget{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32af04a3c791aa353b2385ff97d431330fc}\label{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32af04a3c791aa353b2385ff97d431330fc} 
+COLMAJOR&Indicates the values are naturally iterable by column. \\
+\hline
+
+\end{DoxyEnumFields}

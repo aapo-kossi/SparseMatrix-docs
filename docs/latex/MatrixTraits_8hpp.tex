@@ -1,0 +1,76 @@
+\doxysection{include/\+Matrix\+Traits.hpp File Reference}
+\hypertarget{MatrixTraits_8hpp}{}\label{MatrixTraits_8hpp}\index{include/MatrixTraits.hpp@{include/MatrixTraits.hpp}}
+
+
+Concepts, types and function wrappers for Matrix objects.  
+
+
+{\ttfamily \#include $<$complex$>$}\newline
+{\ttfamily \#include $<$execution$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structMatrixTraits_1_1norm__type}{Matrix\+Traits\+::norm\+\_\+type$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em Encodes the type returned by std\+::norm$<$\+T$>$ \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structMatrixTraits_1_1norm__type_3_01std_1_1complex_3_01IT_01_4_01_4}{Matrix\+Traits\+::norm\+\_\+type$<$ std\+::complex$<$ IT $>$ $>$}}
+\begin{DoxyCompactList}\small\item\em Encodes the type returned by std\+::norm$<$\+T$>$ \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structMatrixTraits_1_1comp__op}{Matrix\+Traits\+::comp\+\_\+op$<$ T, Storage\+Order $>$}}
+\begin{DoxyCompactList}\small\item\em Defines the comparison operator for COOmap matrices. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structMatrixTraits_1_1comp__op_3_01T_00_01StorageOrder_1_1COLMAJOR_01_4}{Matrix\+Traits\+::comp\+\_\+op$<$ T, Storage\+Order\+::\+COLMAJOR $>$}}
+\begin{DoxyCompactList}\small\item\em Defines the comparison operator for COOmap matrices. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceMatrixTraits}{Matrix\+Traits}}
+\begin{DoxyCompactList}\small\item\em Namespace for Matrix traits. \end{DoxyCompactList}\item 
+namespace \mbox{\hyperlink{namespaceMatrixTraits_1_1execution}{Matrix\+Traits\+::execution}}
+\begin{DoxyCompactList}\small\item\em Namespace for execution modes of matrix algorithms. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{Matrix\+Traits\+::\+Numeric}}
+\begin{DoxyCompactList}\small\item\em Restricts template types to scalar or complex arithmetic values. \end{DoxyCompactList}\item 
+concept \mbox{\hyperlink{conceptMatrixTraits_1_1IsRowMajor}{Matrix\+Traits\+::\+Is\+Row\+Major}}
+\begin{DoxyCompactList}\small\item\em Restricts the storage order to only row-\/major form. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} \{ \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32aa46531966d2fd2a0d92304d9212e44f4}{Matrix\+Traits\+::\+ROWMAJOR}}
+, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32af04a3c791aa353b2385ff97d431330fc}{Matrix\+Traits\+::\+COLMAJOR}}
+ \}
+\begin{DoxyCompactList}\small\item\em Indicates the storage order of a sparse Matrix. \end{DoxyCompactList}\item 
+enum class \mbox{\hyperlink{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75}{Matrix\+Traits\+::\+Norm}} \{ \mbox{\hyperlink{namespaceMatrixTraits_a81b00f47d4417908c888e8ab289bda75a06c2cea18679d64399783748fa367bdd}{Matrix\+Traits\+::\+One}}
+, {\bfseries Frobenius}
+, {\bfseries Infinity}
+ \}
+\begin{DoxyCompactList}\small\item\em Types of matrix-\/norms. \end{DoxyCompactList}\item 
+enum class \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Matrix\+Traits\+::execution\+::\+Mode}} \{ {\bfseries Auto}
+, \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5aa7e82daa7280af25afbaa076ac16eb1e}{Matrix\+Traits\+::execution\+::\+Sequential}}
+, \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5a98402eecfbcefc336954458a01752131}{Matrix\+Traits\+::execution\+::\+Parallel}}
+ \}
+\begin{DoxyCompactList}\small\item\em Contains possible execution policies. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespaceMatrixTraits_a4723886514f5d3416da9a0af7c45c362}\label{namespaceMatrixTraits_a4723886514f5d3416da9a0af7c45c362} 
+{\footnotesize template$<$typename T$>$ }\\constexpr bool {\bfseries Matrix\+Traits\+::is\+\_\+complex\+\_\+arithmetic\+\_\+v} (T)
+\begin{DoxyCompactList}\small\item\em Checks if the type of the input is a complex number. \end{DoxyCompactList}\item 
+\Hypertarget{namespaceMatrixTraits_a2eed8e1ae2a6057363b99ad9aa403b2e}\label{namespaceMatrixTraits_a2eed8e1ae2a6057363b99ad9aa403b2e} 
+{\footnotesize template$<$typename IT$>$ }\\constexpr bool {\bfseries Matrix\+Traits\+::is\+\_\+complex\+\_\+arithmetic\+\_\+v} (std\+::complex$<$ IT $>$)
+\begin{DoxyCompactList}\small\item\em Checks if the type of the input is a complex number. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Mode}} M$>$ }\\bool \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_a4affae15a4b97dee11b0d7d180cfdf75}{Matrix\+Traits\+::execution\+::parallelize}} (size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Decides whether to execute a loop in parallel. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Mode}} M, typename F$>$ \newline
+requires (std\+::is\+\_\+invocable\+\_\+v$<$F, std\+::execution\+::sequenced\+\_\+policy$>$)}\\decltype(auto) \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_a32d4caf4f041c3910191b711a5dca0bd}{Matrix\+Traits\+::execution\+::maybe\+\_\+par}} (F \&\&functor, size\+\_\+t n\+\_\+iters)
+\begin{DoxyCompactList}\small\item\em Call a function with dynamic std\+::execution. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespaceMatrixTraits_1_1execution_aed37b36a1ce318b81b702784378b51a5}{Mode}} M, typename F$>$ \newline
+requires (std\+::is\+\_\+invocable\+\_\+v$<$F, std\+::execution\+::unsequenced\+\_\+policy$>$)}\\decltype(auto) \mbox{\hyperlink{namespaceMatrixTraits_1_1execution_affeca8f1ee2c8463c4cce6c26fbb7fbf}{Matrix\+Traits\+::execution\+::maybe\+\_\+par\+\_\+unseq}} (F functor, size\+\_\+t n\+\_\+iters)
+\begin{DoxyCompactList}\small\item\em Call a function with dynamic std\+::execution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Concepts, types and function wrappers for Matrix objects. 
+

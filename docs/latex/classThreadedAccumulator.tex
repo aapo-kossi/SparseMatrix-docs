@@ -1,0 +1,99 @@
+\doxysection{Threaded\+Accumulator\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classThreadedAccumulator}{}\label{classThreadedAccumulator}\index{ThreadedAccumulator$<$ T $>$@{ThreadedAccumulator$<$ T $>$}}
+
+
+A thread-\/local accumulator class for parallel computations.  
+
+
+
+
+{\ttfamily \#include $<$Threaded\+Accumulator.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{classThreadedAccumulator_aa06d854ee051c7c8ba1fb9ff4ee05069}{set\+\_\+size}} (size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Sets the size of the accumulation buffers. \end{DoxyCompactList}\item 
+static std\+::vector$<$ T $>$ \& \mbox{\hyperlink{classThreadedAccumulator_abc15b5c237da769787e1f9a64be711b6}{vec}} ()
+\begin{DoxyCompactList}\small\item\em Accessor to the local data buffer. \end{DoxyCompactList}\item 
+static std\+::vector$<$ T $>$ \&\& \mbox{\hyperlink{classThreadedAccumulator_aa030cb24512f3abdc3f5b759e067014c}{result}} ()
+\begin{DoxyCompactList}\small\item\em Reduce final result to global value. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{classThreadedAccumulator_a98d3d5eabdef288bbe5be4acae0af328}{reset}} ()
+\begin{DoxyCompactList}\small\item\em Resets the accumulator for reuse. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class Threaded\+Accumulator$<$ T $>$}
+A thread-\/local accumulator class for parallel computations. 
+
+This class provides a mechanism for accumulating results from multiple threads into a single global buffer. Each thread has its own local buffer, and the results from the local buffers are periodically merged into the global buffer. This approach reduces contention and improves performance in parallel computations.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the elements to be accumulated. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classThreadedAccumulator_a98d3d5eabdef288bbe5be4acae0af328}\index{ThreadedAccumulator$<$ T $>$@{ThreadedAccumulator$<$ T $>$}!reset@{reset}}
+\index{reset@{reset}!ThreadedAccumulator$<$ T $>$@{ThreadedAccumulator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{classThreadedAccumulator_a98d3d5eabdef288bbe5be4acae0af328} 
+template$<$typename T$>$ \\
+static void \mbox{\hyperlink{classThreadedAccumulator}{Threaded\+Accumulator}}$<$ T $>$\+::reset (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Resets the accumulator for reuse. 
+
+This method is not thread safe, call only when you are sure there are no other threads writing \Hypertarget{classThreadedAccumulator_aa030cb24512f3abdc3f5b759e067014c}\index{ThreadedAccumulator$<$ T $>$@{ThreadedAccumulator$<$ T $>$}!result@{result}}
+\index{result@{result}!ThreadedAccumulator$<$ T $>$@{ThreadedAccumulator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{result()}{result()}}
+{\footnotesize\ttfamily \label{classThreadedAccumulator_aa030cb24512f3abdc3f5b759e067014c} 
+template$<$typename T$>$ \\
+static std\+::vector$<$ T $>$ \&\& \mbox{\hyperlink{classThreadedAccumulator}{Threaded\+Accumulator}}$<$ T $>$\+::result (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Reduce final result to global value. 
+
+\begin{DoxyReturn}{Returns}
+The final accumulated result. 
+\end{DoxyReturn}
+\Hypertarget{classThreadedAccumulator_aa06d854ee051c7c8ba1fb9ff4ee05069}\index{ThreadedAccumulator$<$ T $>$@{ThreadedAccumulator$<$ T $>$}!set\_size@{set\_size}}
+\index{set\_size@{set\_size}!ThreadedAccumulator$<$ T $>$@{ThreadedAccumulator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{set\_size()}{set\_size()}}
+{\footnotesize\ttfamily \label{classThreadedAccumulator_aa06d854ee051c7c8ba1fb9ff4ee05069} 
+template$<$typename T$>$ \\
+static void \mbox{\hyperlink{classThreadedAccumulator}{Threaded\+Accumulator}}$<$ T $>$\+::set\+\_\+size (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Sets the size of the accumulation buffers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & The size of the global buffer. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classThreadedAccumulator_abc15b5c237da769787e1f9a64be711b6}\index{ThreadedAccumulator$<$ T $>$@{ThreadedAccumulator$<$ T $>$}!vec@{vec}}
+\index{vec@{vec}!ThreadedAccumulator$<$ T $>$@{ThreadedAccumulator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{vec()}{vec()}}
+{\footnotesize\ttfamily \label{classThreadedAccumulator_abc15b5c237da769787e1f9a64be711b6} 
+template$<$typename T$>$ \\
+static std\+::vector$<$ T $>$ \& \mbox{\hyperlink{classThreadedAccumulator}{Threaded\+Accumulator}}$<$ T $>$\+::vec (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Accessor to the local data buffer. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the thread-\/local buffer for accumulation. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{ThreadedAccumulator_8hpp}{Threaded\+Accumulator.\+hpp}}\end{DoxyCompactItemize}

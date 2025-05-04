@@ -1,0 +1,28 @@
+var classalgebra_1_1Matrix =
+[
+    [ "index_t", "classalgebra_1_1Matrix.html#a80470f4fb0eeb95a9e41229cf08b4916", null ],
+    [ "value_type", "classalgebra_1_1Matrix.html#a8fb0b076bc48bb2d1a3c1b874c9e7722", null ],
+    [ "Matrix", "classalgebra_1_1Matrix.html#a74ee5d9890d3fd84c7fcba96c0b740b4", null ],
+    [ "Matrix", "classalgebra_1_1Matrix.html#a5468aff7857b36a39cd3095d1ad6ff69", null ],
+    [ "Matrix", "classalgebra_1_1Matrix.html#a4b7d62824e31954ceb7d24e4756039e1", null ],
+    [ "Matrix", "classalgebra_1_1Matrix.html#a678ee08f4ff447338d2e547465fad0ef", null ],
+    [ "cols", "classalgebra_1_1Matrix.html#af3b14c18eef893668164c68f3c36f361", null ],
+    [ "compress", "classalgebra_1_1Matrix.html#a46487dd988947f4439bffecc910a1e78", null ],
+    [ "compressed_col", "classalgebra_1_1Matrix.html#a27a2b54ae758144308df0ec75e974722", null ],
+    [ "compressed_row", "classalgebra_1_1Matrix.html#a3de98df83674d146e1736c0e7d880685", null ],
+    [ "is_compressed", "classalgebra_1_1Matrix.html#ab42c34c1908f82a6cb004f2aceffcd1c", null ],
+    [ "norm", "classalgebra_1_1Matrix.html#af3bfe729d0ca0060cc1a631a56728b52", null ],
+    [ "operator()", "classalgebra_1_1Matrix.html#aa7a85f2a2aaac7c28510bdbef21eacce", null ],
+    [ "operator()", "classalgebra_1_1Matrix.html#a1ba4adc7ae5bb02b16a9ae10455ce29a", null ],
+    [ "operator()", "classalgebra_1_1Matrix.html#aea0e25f3d5235e9cddf881c7389deab4", null ],
+    [ "operator[]", "classalgebra_1_1Matrix.html#af5cf36b7387a601f9ad1bfecf2b03ae3", null ],
+    [ "operator[]", "classalgebra_1_1Matrix.html#aeee5759a94d105cd61935bcf4c03aeb4", null ],
+    [ "resize", "classalgebra_1_1Matrix.html#ae1499b36946c0fbe2af94054debed031", null ],
+    [ "rows", "classalgebra_1_1Matrix.html#a20173f8bebf75f5af574caf956138bdf", null ],
+    [ "uncompress", "classalgebra_1_1Matrix.html#a27c2749776694423af9e95757f58e529", null ],
+    [ "uncompressed_col", "classalgebra_1_1Matrix.html#ab5e0b89e31f4fa9a6e8f21a59098984f", null ],
+    [ "uncompressed_row", "classalgebra_1_1Matrix.html#a9de0a69a4e2f5076cee7e61f0bd0d30b", null ],
+    [ "matrix_market_read", "classalgebra_1_1Matrix.html#a3f124c0ed60d8a734da066c0cb59c4c7", null ],
+    [ "operator*", "classalgebra_1_1Matrix.html#a06ca96bab918144fac7f9e5fedf74412", null ],
+    [ "operator*", "classalgebra_1_1Matrix.html#a219f373edf9169601051c5ac3d3e6728", null ]
+];

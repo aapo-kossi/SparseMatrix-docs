@@ -1,0 +1,48 @@
+\doxysection{canonical\+\_\+t\texorpdfstring{$<$}{<} int \texorpdfstring{$>$}{>} Struct Reference}
+\hypertarget{structcanonical__t_3_01int_01_4}{}\label{structcanonical__t_3_01int_01_4}\index{canonical\_t$<$ int $>$@{canonical\_t$<$ int $>$}}
+
+
+The int type is guaranteed to be at least 16 bits, but maybe more.  
+
+
+
+
+{\ttfamily \#include $<$Canonical\+Types.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{structcanonical__t_3_01int_01_4_a966ed1c7e061fa84a3fad2cfa3a19c61}{type}}
+\begin{DoxyCompactList}\small\item\em The fixed size type. \end{DoxyCompactList}\item 
+\Hypertarget{structcanonical__t_a38199d9a3064e25734ff6eb4617ab2b1}\label{structcanonical__t_a38199d9a3064e25734ff6eb4617ab2b1} 
+using {\bfseries type}
+\begin{DoxyCompactList}\small\item\em the same type as the input \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The int type is guaranteed to be at least 16 bits, but maybe more. 
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{structcanonical__t_3_01int_01_4_a966ed1c7e061fa84a3fad2cfa3a19c61}\index{canonical\_t$<$ int $>$@{canonical\_t$<$ int $>$}!type@{type}}
+\index{type@{type}!canonical\_t$<$ int $>$@{canonical\_t$<$ int $>$}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily \label{structcanonical__t_3_01int_01_4_a966ed1c7e061fa84a3fad2cfa3a19c61} 
+using \mbox{\hyperlink{structcanonical__t}{canonical\+\_\+t}}$<$ int $>$\mbox{\hyperlink{structcanonical__t}{\+::type}}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ std::conditional\_t<\textcolor{keyword}{sizeof}(int)\ ==\ 2,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ int16\_t,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::conditional\_t<\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int})\ ==\ 4,\ int32\_t,\ int64\_t>>}
+
+\end{DoxyCode}
+
+
+The fixed size type. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{CanonicalTypes_8hpp}{Canonical\+Types.\+hpp}}\end{DoxyCompactItemize}

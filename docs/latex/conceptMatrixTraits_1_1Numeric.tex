@@ -1,0 +1,23 @@
+\doxysection{Matrix\+Traits\+::Numeric Concept Reference}
+\hypertarget{conceptMatrixTraits_1_1Numeric}{}\label{conceptMatrixTraits_1_1Numeric}\index{MatrixTraits::Numeric@{MatrixTraits::Numeric}}
+
+
+Restricts template types to scalar or complex arithmetic values.  
+
+
+
+
+{\ttfamily \#include $<$Matrix\+Traits.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptMatrixTraits_1_1Numeric}{MatrixTraits::Numeric}}\ =\ }
+\DoxyCodeLine{\ \ \textcolor{keyword}{requires}(T\ a)\ \{\ std::is\_arithmetic\_v<T>\ ||\ \mbox{\hyperlink{namespaceMatrixTraits_a4723886514f5d3416da9a0af7c45c362}{is\_complex\_arithmetic\_v}}(a);\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Restricts template types to scalar or complex arithmetic values. 

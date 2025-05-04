@@ -1,0 +1,91 @@
+\doxysection{algebra Namespace Reference}
+\hypertarget{namespacealgebra}{}\label{namespacealgebra}\index{algebra@{algebra}}
+
+
+Namespace for \doxylink{classalgebra_1_1Matrix}{Matrix} operations.  
+
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix}}
+\begin{DoxyCompactList}\small\item\em Represents a sparse mathematical matrix. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classalgebra_1_1MatrixVariant}{Matrix\+Variant}}
+\begin{DoxyCompactList}\small\item\em Represents a \doxylink{classalgebra_1_1Matrix}{Matrix} with unknown element type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O$>$ }\\using \mbox{\hyperlink{namespacealgebra_a20bcabbcebdafa332a8cdc3109929be6}{\+\_\+\+Matrix\+Variant\+Base}}
+\begin{DoxyCompactList}\small\item\em The base class for a matrix with dynamic element type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$Numeric T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Storage\+Order}} O$>$ }\\bool \mbox{\hyperlink{namespacealgebra_aa63b893c83b43b22a638e4b963a2e203}{matrix\+\_\+market\+\_\+read}} (const std\+::string \&file\+\_\+name, \mbox{\hyperlink{classalgebra_1_1Matrix}{algebra\+::\+Matrix}}$<$ T, O $>$ \&mat)
+\begin{DoxyCompactList}\small\item\em Loads matrix content from a file in the Matrix\+Market format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Namespace for \doxylink{classalgebra_1_1Matrix}{Matrix} operations. 
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{namespacealgebra_a20bcabbcebdafa332a8cdc3109929be6}\index{algebra@{algebra}!\_MatrixVariantBase@{\_MatrixVariantBase}}
+\index{\_MatrixVariantBase@{\_MatrixVariantBase}!algebra@{algebra}}
+\doxysubsubsection{\texorpdfstring{\_MatrixVariantBase}{\_MatrixVariantBase}}
+{\footnotesize\ttfamily \label{namespacealgebra_a20bcabbcebdafa332a8cdc3109929be6} 
+template$<$\mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Matrix\+Traits\+::\+Storage\+Order}} O$>$ \\
+using \mbox{\hyperlink{namespacealgebra_a20bcabbcebdafa332a8cdc3109929be6}{algebra\+::\+\_\+\+Matrix\+Variant\+Base}}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ std::variant<Matrix<double,\ O>,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix<float,\ O>}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix<std::complex<double>}},\ O>,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix<std::complex<float>}},\ O>,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix<int32\_t,\ O>}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classalgebra_1_1Matrix}{Matrix<int64\_t,\ O>}}>}
+
+\end{DoxyCode}
+
+
+The base class for a matrix with dynamic element type. 
+
+A matrix variant may store elements of scalar or complex single or double precision, or 32 or 64 bit integral values.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em O} & The storage order for the variant \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacealgebra_aa63b893c83b43b22a638e4b963a2e203}\index{algebra@{algebra}!matrix\_market\_read@{matrix\_market\_read}}
+\index{matrix\_market\_read@{matrix\_market\_read}!algebra@{algebra}}
+\doxysubsubsection{\texorpdfstring{matrix\_market\_read()}{matrix\_market\_read()}}
+{\footnotesize\ttfamily \label{namespacealgebra_aa63b893c83b43b22a638e4b963a2e203} 
+template$<$Numeric T, \mbox{\hyperlink{namespaceMatrixTraits_a797de13233dd3a54202f67d529912f32}{Storage\+Order}} O$>$ \\
+bool algebra\+::matrix\+\_\+market\+\_\+read (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{file\+\_\+name}{, }\item[{\mbox{\hyperlink{classalgebra_1_1Matrix}{algebra\+::\+Matrix}}$<$ T, O $>$ \&}]{mat}{}\end{DoxyParamCaption})}
+
+
+
+Loads matrix content from a file in the Matrix\+Market format. 
+
+The matrix size will be set according to the Matrix\+Market file. The datatype specified in the input file should match the type of the \doxylink{classalgebra_1_1Matrix}{Matrix}.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em TT} & the datatype of the stored elements \\
+\hline
+{\em OO} & the storage order of the loaded matrix \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em file\+\_\+name} & The Matrix\+Market file from which to read the data \\
+\hline
+{\em mat} & The \doxylink{classalgebra_1_1Matrix}{Matrix} in which to insert the content \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A boolean indicating a successful load of the data 
+\end{DoxyReturn}

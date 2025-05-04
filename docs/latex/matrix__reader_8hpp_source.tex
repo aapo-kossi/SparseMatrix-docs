@@ -1,0 +1,287 @@
+\doxysection{matrix\+\_\+reader.\+hpp}
+\hypertarget{matrix__reader_8hpp_source}{}\label{matrix__reader_8hpp_source}\index{include/matrix\_reader.hpp@{include/matrix\_reader.hpp}}
+\mbox{\hyperlink{matrix__reader_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#ifndef\ MATRIXREADER\_HEADER}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ MATRIXREADER\_HEADER}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{Matrix_8hpp}{Matrix.hpp}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{MatrixTraits_8hpp}{MatrixTraits.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <concepts>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespaceMatrixTraits}{MatrixTraits}};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }\{\ \textcolor{comment}{//\ local\ utilities}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{enum}\ symmetry}
+\DoxyCodeLine{00024\ \{}
+\DoxyCodeLine{00025\ \ \ GEN,}
+\DoxyCodeLine{00026\ \ \ SYM,}
+\DoxyCodeLine{00027\ \ \ SKW,}
+\DoxyCodeLine{00028\ \ \ HRM,}
+\DoxyCodeLine{00029\ \ \ INVALID\_SYMMETRY}
+\DoxyCodeLine{00030\ \};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{enum}\ domain}
+\DoxyCodeLine{00033\ \{}
+\DoxyCodeLine{00034\ \ \ INT,}
+\DoxyCodeLine{00035\ \ \ COMPLEX,}
+\DoxyCodeLine{00036\ \ \ REAL,}
+\DoxyCodeLine{00037\ \ \ PATTERN,}
+\DoxyCodeLine{00038\ \ \ INVALID\_DOMAIN}
+\DoxyCodeLine{00039\ \};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{constexpr}\ domain}
+\DoxyCodeLine{00042\ get\_domain(std::string\_view\ s)}
+\DoxyCodeLine{00043\ \{}
+\DoxyCodeLine{00044\ \ \ domain\ ret;}
+\DoxyCodeLine{00045\ \ \ \textcolor{keywordflow}{if}\ (s\ ==\ \textcolor{stringliteral}{"{}integer"{}})}
+\DoxyCodeLine{00046\ \ \ \ \ ret\ =\ INT;}
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (s\ ==\ \textcolor{stringliteral}{"{}real"{}})}
+\DoxyCodeLine{00048\ \ \ \ \ ret\ =\ REAL;}
+\DoxyCodeLine{00049\ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (s\ ==\ \textcolor{stringliteral}{"{}complex"{}})}
+\DoxyCodeLine{00050\ \ \ \ \ ret\ =\ COMPLEX;}
+\DoxyCodeLine{00051\ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (s\ ==\ \textcolor{stringliteral}{"{}pattern"{}})}
+\DoxyCodeLine{00052\ \ \ \ \ ret\ =\ PATTERN;}
+\DoxyCodeLine{00053\ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00054\ \ \ \ \ ret\ =\ INVALID\_DOMAIN;}
+\DoxyCodeLine{00055\ \ \ \textcolor{keywordflow}{return}\ ret;}
+\DoxyCodeLine{00056\ \};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{keyword}{constexpr}\ symmetry}
+\DoxyCodeLine{00059\ get\_symmetry(std::string\_view\ s)}
+\DoxyCodeLine{00060\ \{}
+\DoxyCodeLine{00061\ \ \ symmetry\ ret;}
+\DoxyCodeLine{00062\ \ \ \textcolor{keywordflow}{if}\ (s\ ==\ \textcolor{stringliteral}{"{}general"{}})}
+\DoxyCodeLine{00063\ \ \ \ \ ret\ =\ GEN;}
+\DoxyCodeLine{00064\ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (s\ ==\ \textcolor{stringliteral}{"{}symmetric"{}})}
+\DoxyCodeLine{00065\ \ \ \ \ ret\ =\ SYM;}
+\DoxyCodeLine{00066\ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (s\ ==\ \textcolor{stringliteral}{"{}hermitian"{}})}
+\DoxyCodeLine{00067\ \ \ \ \ ret\ =\ HRM;}
+\DoxyCodeLine{00068\ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (s\ ==\ \textcolor{stringliteral}{"{}skew-\/symmetric"{}})}
+\DoxyCodeLine{00069\ \ \ \ \ ret\ =\ SKW;}
+\DoxyCodeLine{00070\ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00071\ \ \ \ \ ret\ =\ INVALID\_SYMMETRY;}
+\DoxyCodeLine{00072\ \ \ \textcolor{keywordflow}{return}\ ret;}
+\DoxyCodeLine{00073\ \};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}}
+\DoxyCodeLine{00076\ read\_header(std::ifstream\&\ in,\ symmetry\&\ s,\ domain\&\ domain,\ \textcolor{keywordtype}{bool}\&\ dense)}
+\DoxyCodeLine{00077\ \{}
+\DoxyCodeLine{00078\ \ \ \textcolor{keywordflow}{if}\ (!in)}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ std::string\ header;}
+\DoxyCodeLine{00082\ \ \ std::getline(in,\ header);}
+\DoxyCodeLine{00083\ \ \ \textcolor{keywordflow}{if}\ (!in.good())}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00085\ \ \ std::stringstream\ headerstream(header);}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ std::string\ none,\ none2,\ dense\_str,\ domain\_str,\ symmetry\_str;}
+\DoxyCodeLine{00088\ \ \ std::array<std::string*,\ 5>\ fields\{}
+\DoxyCodeLine{00089\ \ \ \ \ \&none,\ \&none2,\ \&dense\_str,\ \&domain\_str,\ \&symmetry\_str}
+\DoxyCodeLine{00090\ \ \ \};}
+\DoxyCodeLine{00091\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ field\ :\ fields)\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ headerstream\ >>\ *field;}
+\DoxyCodeLine{00093\ \ \ \}}
+\DoxyCodeLine{00094\ \ \ domain\ =\ get\_domain(domain\_str);}
+\DoxyCodeLine{00095\ \ \ dense\ =\ dense\_str\ ==\ \textcolor{stringliteral}{"{}array"{}};}
+\DoxyCodeLine{00096\ \ \ s\ =\ get\_symmetry(symmetry\_str);}
+\DoxyCodeLine{00097\ \ \ \textcolor{keywordflow}{if}\ (s\ ==\ INVALID\_SYMMETRY)}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00099\ \ \ \textcolor{keywordflow}{if}\ (domain\ ==\ INVALID\_DOMAIN)}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00101\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00102\ \}}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00105\ \textcolor{keyword}{struct\ }domain\_matches}
+\DoxyCodeLine{00106\ \{}
+\DoxyCodeLine{00107\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ operator()(domain\ d)\ \{\ \textcolor{keywordflow}{return}\ d\ ==\ PATTERN;\ \}}
+\DoxyCodeLine{00108\ \};}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00111\ \ \ \textcolor{keyword}{requires}(std::is\_integral\_v<T>)}
+\DoxyCodeLine{00112\ \textcolor{keyword}{struct}\ domain\_matches<T>}
+\DoxyCodeLine{00113\ \{}
+\DoxyCodeLine{00114\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ operator()(domain\ d)\ \{\ \textcolor{keywordflow}{return}\ d\ ==\ INT\ ||\ d\ ==\ PATTERN;\ \}}
+\DoxyCodeLine{00115\ \};}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00118\ \ \ \textcolor{keyword}{requires}(std::is\_floating\_point\_v<T>)}
+\DoxyCodeLine{00119\ \textcolor{keyword}{struct}\ domain\_matches<T>}
+\DoxyCodeLine{00120\ \{}
+\DoxyCodeLine{00121\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ operator()(domain\ d)\ \{\ \textcolor{keywordflow}{return}\ d\ ==\ REAL\ ||\ d\ ==\ PATTERN;\ \}}
+\DoxyCodeLine{00122\ \};}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \textcolor{keyword}{template}<std::\textcolor{keywordtype}{float}ing\_po\textcolor{keywordtype}{int}\ T>}
+\DoxyCodeLine{00125\ \textcolor{keyword}{struct\ }domain\_matches<std::complex<T>>}
+\DoxyCodeLine{00126\ \{}
+\DoxyCodeLine{00127\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ operator()(domain\ d)\ \{\ \textcolor{keywordflow}{return}\ d\ ==\ COMPLEX\ ||\ d\ ==\ PATTERN;\ \}}
+\DoxyCodeLine{00128\ \};}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ I>}
+\DoxyCodeLine{00131\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00132\ read\_dataline(std::stringstream\&\ line,\ I\&\ i,\ I\&\ j,\ T\&\ x)}
+\DoxyCodeLine{00133\ \{}
+\DoxyCodeLine{00134\ \ \ line\ >>\ i\ >>\ j\ >>\ x;}
+\DoxyCodeLine{00135\ \}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \textcolor{keyword}{template}<std::\textcolor{keywordtype}{float}ing\_po\textcolor{keywordtype}{int}\ T,\ \textcolor{keyword}{typename}\ I>}
+\DoxyCodeLine{00138\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00139\ read\_dataline(std::stringstream\&\ line,\ I\&\ i,\ I\&\ j,\ std::complex<T>\&\ x)}
+\DoxyCodeLine{00140\ \{}
+\DoxyCodeLine{00141\ \ \ T\ real\_part,\ imag\_part;}
+\DoxyCodeLine{00142\ \ \ line\ >>\ i\ >>\ j\ >>\ real\_part\ >>\ imag\_part;}
+\DoxyCodeLine{00143\ \ \ x\ =\ std::complex<T>(real\_part,\ imag\_part);}
+\DoxyCodeLine{00144\ \}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Matrix,\ \textcolor{keyword}{typename}\ I>}
+\DoxyCodeLine{00147\ \textcolor{keyword}{auto}}
+\DoxyCodeLine{00148\ get\_inserter(Matrix\&\ mat,\ \textcolor{keyword}{const}\ I\&\ N,\ \textcolor{keyword}{const}\ I\&\ M,\ symmetry\ s)}
+\DoxyCodeLine{00149\ \{}
+\DoxyCodeLine{00150\ \ \ \textcolor{keyword}{using\ }T\ =\ Matrix::value\_type;}
+\DoxyCodeLine{00151\ \ \ std::function<void(I\&,\ I\&,\ T\&)>\ inserter;}
+\DoxyCodeLine{00152\ \ \ \textcolor{keywordflow}{switch}\ (s)\ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordflow}{case}\ (SYM):}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ inserter\ =\ [\&N,\ \&mat](I\&\ i,\ I\&\ j,\ T\&\ x)\ \{}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ <\ N\ \&\&\ j\ <\ N)\ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ mat(i,\ j)\ =\ x;}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ !=\ j)\ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ mat(j,\ i)\ =\ x;}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordflow}{case}\ (HRM):}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ inserter\ =\ [\&N,\ \&mat](I\&\ i,\ I\&\ j,\ T\&\ x)\ \{}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ <\ N\ \&\&\ j\ <\ N)\ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ mat(i,\ j)\ =\ x;}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ !=\ j)\ \{}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ mat(j,\ i)\ =\ x;\ \textcolor{comment}{//\ overridden\ later\ for\ complex\ T}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keywordflow}{case}\ (SKW):}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ inserter\ =\ [\&N,\ \&M,\ \&mat](I\&\ i,\ I\&\ j,\ T\&\ x)\ \{}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ <\ N\ \&\&\ j\ <\ M)\ \{}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ mat(i,\ j)\ =\ x;}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ <\ M\ \&\&\ j\ <\ N\ \&\&\ i\ !=\ j)\ \{}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ mat(j,\ i)\ =\ x;}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ inserter\ =\ [\&N,\ \&M,\ \&mat](I\&\ i,\ I\&\ j,\ T\&\ x)\ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ <\ N\ \&\&\ j\ <\ M)\ \{}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ mat(i,\ j)\ =\ x;}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00189\ \ \ \}}
+\DoxyCodeLine{00190\ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\mbox{\hyperlink{namespaceMatrixTraits_a4723886514f5d3416da9a0af7c45c362}{is\_complex\_arithmetic\_v}}(T\{\}))\ \{}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordflow}{if}\ (s\ ==\ HRM)\ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ inserter\ =\ [\&N,\ \&mat](I\&\ i,\ I\&\ j,\ T\&\ x)\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ <\ N\ \&\&\ j\ <\ N)\ \{}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ mat(i,\ j)\ =\ x;}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ !=\ j)\ \{}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ mat(j,\ i)\ =\ std::conj(x);}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00200\ \ \ \ \ \}}
+\DoxyCodeLine{00201\ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \textcolor{keywordflow}{return}\ inserter;}
+\DoxyCodeLine{00203\ \}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \}}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacealgebra}{algebra}}\ \{}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00222\ \textcolor{keyword}{template}<Numeric\ T,\ StorageOrder\ O>}
+\DoxyCodeLine{00223\ \textcolor{keywordtype}{bool}}
+\DoxyCodeLine{00224\ \mbox{\hyperlink{namespacealgebra_aa63b893c83b43b22a638e4b963a2e203}{matrix\_market\_read}}(\textcolor{keyword}{const}\ std::string\&\ file\_name,\ \mbox{\hyperlink{classalgebra_1_1Matrix}{algebra::Matrix<T,\ O>}}\&\ mat)}
+\DoxyCodeLine{00225\ \{}
+\DoxyCodeLine{00226\ \ \ \textcolor{keyword}{using\ }index\_t\ =\ \textcolor{keyword}{typename}\ std::remove\_reference\_t<\textcolor{keyword}{decltype}(mat)>::index\_t;}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ \ \ \textcolor{keywordflow}{if}\ (mat.\mbox{\hyperlink{classalgebra_1_1Matrix_ab42c34c1908f82a6cb004f2aceffcd1c}{is\_compressed}}())}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ \ \ \textcolor{comment}{//\ get\ header}}
+\DoxyCodeLine{00232\ \ \ symmetry\ s;}
+\DoxyCodeLine{00233\ \ \ domain\ d;}
+\DoxyCodeLine{00234\ \ \ \textcolor{keywordtype}{bool}\ is\_dense;}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \ \ std::ifstream\ input(file\_name.c\_str(),\ std::ios::in);}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \ \ \textcolor{keywordflow}{if}\ (!input.is\_open())\ \{}
+\DoxyCodeLine{00239\ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Error:\ Could\ not\ open\ file\ '"{}}\ <<\ file\_name\ <<\ \textcolor{stringliteral}{"{}'"{}}}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::endl;}
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00242\ \ \ \}}
+\DoxyCodeLine{00243\ \ \ \textcolor{keywordtype}{bool}\ success\ =\ read\_header(input,\ s,\ d,\ is\_dense);}
+\DoxyCodeLine{00244\ \ \ \textcolor{keywordflow}{if}\ (!success)\ \{}
+\DoxyCodeLine{00245\ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Error\ reading\ header"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00246\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00247\ \ \ \}}
+\DoxyCodeLine{00248\ \ \ \textcolor{keywordflow}{if}\ (is\_dense)\ \{}
+\DoxyCodeLine{00249\ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Warning:\ matrix\ is\ dense,\ not\ compressed"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00251\ \ \ \}}
+\DoxyCodeLine{00252\ \ \ \textcolor{keywordflow}{if}\ (!domain\_matches<T>\{\}(d))\ \{}
+\DoxyCodeLine{00253\ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Error:\ matrix\ domain\ does\ not\ match\ type"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00254\ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ \ expected:\ "{}}\ <<\ d\ <<\ std::endl}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ \ got:\ "{}}\ <<\ \textcolor{keyword}{typeid}(T).name()\ <<\ std::endl;}
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00258\ \ \ \}}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00260\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ buf\_size\ =\ 2048;}
+\DoxyCodeLine{00261\ \ \ \textcolor{keywordtype}{char}\ line\_buffer[buf\_size];}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00263\ \ \ \textcolor{comment}{//\ skip\ comments}}
+\DoxyCodeLine{00264\ \ \ \textcolor{keywordflow}{for}\ (;\ input.getline(line\_buffer,\ buf\_size)\ \&\&\ (line\_buffer[0]\ ==\ \textcolor{charliteral}{'\%'});)}
+\DoxyCodeLine{00265\ \ \ \ \ ;}
+\DoxyCodeLine{00266\ }
+\DoxyCodeLine{00267\ \ \ \textcolor{comment}{//\ read\ metadata}}
+\DoxyCodeLine{00268\ \ \ index\_t\ N\{\ 0\ \},\ M\{\ 0\ \},\ NNZ\{\ 0\ \};}
+\DoxyCodeLine{00269\ \ \ std::stringstream\ line(line\_buffer);}
+\DoxyCodeLine{00270\ \ \ line\ >>\ N\ >>\ M\ >>\ NNZ;}
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00272\ \ \ \textcolor{comment}{//\ simple,\ unoptimized\ load}}
+\DoxyCodeLine{00273\ \ \ mat.M\_value\_map.clear();}
+\DoxyCodeLine{00274\ \ \ mat.\mbox{\hyperlink{classalgebra_1_1Matrix_ae1499b36946c0fbe2af94054debed031}{resize}}(N,\ M);}
+\DoxyCodeLine{00275\ \ \ index\_t\ i,\ j;}
+\DoxyCodeLine{00276\ \ \ T\ x;}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00278\ \ \ \textcolor{keywordflow}{if}\ ((N\ !=\ M)\ \&\&\ (s\ ==\ SYM\ ||\ s\ ==\ HRM))\ \{}
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}Symmetric\ or\ Hermitian\ matrix\ must\ be\ square"{}});}
+\DoxyCodeLine{00280\ \ \ \}}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00282\ \ \ std::function<void(index\_t\&,\ index\_t\&,\ T\&)>\ mat\_insert\ =}
+\DoxyCodeLine{00283\ \ \ \ \ get\_inserter(mat,\ N,\ M,\ s);}
+\DoxyCodeLine{00284\ }
+\DoxyCodeLine{00285\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ k\ =\ 0;\ input.getline(line\_buffer,\ buf\_size)\ \&\&\ k\ <\ NNZ;\ ++k)\ \{}
+\DoxyCodeLine{00286\ \ \ \ \ std::stringstream\ line(line\_buffer);}
+\DoxyCodeLine{00287\ \ \ \ \ read\_dataline(line,\ i,\ j,\ x);}
+\DoxyCodeLine{00288\ \ \ \ \ -\/-\/i;}
+\DoxyCodeLine{00289\ \ \ \ \ -\/-\/j;}
+\DoxyCodeLine{00290\ \ \ \ \ \textcolor{keywordflow}{if}\ (x\ ==\ T\{\})\ \{}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00292\ \ \ \ \ \}}
+\DoxyCodeLine{00293\ \ \ \ \ mat\_insert(i,\ j,\ x);}
+\DoxyCodeLine{00294\ \ \ \}}
+\DoxyCodeLine{00295\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00296\ \};}
+\DoxyCodeLine{00297\ }
+\DoxyCodeLine{00298\ \}\ \textcolor{comment}{//\ namespace\ algebra}}
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00300\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
